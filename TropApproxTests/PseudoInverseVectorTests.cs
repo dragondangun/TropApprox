@@ -36,15 +36,11 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void PseudoInverseVector_4_1_0_1_4() {
+        public void PseudoInverseVector_4_nr_1_nr_0_nr_1_nr_4() {
             var vector = MathS.Vector(4, 1, 0, 1, 4);
 
             var expected = MathS.Matrices.Matrix(1, 5,
-                -4,
-                -1,
-                0,
-                -1,
-                -4);
+                -4, -1, 0, -1, -4);
 
             // Act
             var given = Approx.PseudoInverse(vector);
@@ -142,6 +138,34 @@ namespace TropApproxTests {
 
             var expected = MathS.Matrices.Matrix(1, 3,
                 0, 0, 0);
+
+            // Act
+            var given = Approx.PseudoInverse(vector);
+
+            // Assert
+            Assert.AreEqual(expected, given);
+        }
+
+        [TestMethod]
+        public void PseudoInverseVector_0_nr_0_nr_0() {
+            var vector = MathS.Matrices.Matrix(1, 3,
+                0, 0, 0);
+
+            var expected = MathS.Vector(0, 0, 0);
+
+            // Act
+            var given = Approx.PseudoInverse(vector);
+
+            // Assert
+            Assert.AreEqual(expected, given);
+        }
+
+        [TestMethod]
+        public void PseudoInverseVector_1_nr_0_nr_1() {
+            var vector = MathS.Vector(1, 0, 1);
+
+            var expected = MathS.Matrices.Matrix(1, 3, 
+                -1, 0, -1);
 
             // Act
             var given = Approx.PseudoInverse(vector);

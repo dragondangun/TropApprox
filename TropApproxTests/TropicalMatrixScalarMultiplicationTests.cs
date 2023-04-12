@@ -50,5 +50,19 @@ namespace TropApproxTests {
             // Assert
             Assert.AreEqual(expected, given);
         }
+
+        [TestMethod]
+        public void TropicalMatrixScalarMultiplication_A_0_B_0_nr_0_nr_0() {
+            var A = MathS.Vector(0);
+            var B = MathS.Vector(0, 0, 0);
+
+            var expected = MathS.Vector(0, 0, 0);
+
+            // Act
+            var given = Approx.TropicalMatrixScalarMultiplication(A, B);
+
+            // Assert
+            Assert.AreEqual(expected, given);
+        }
     }
 }
