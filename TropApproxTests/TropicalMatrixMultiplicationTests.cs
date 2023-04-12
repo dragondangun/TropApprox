@@ -14,7 +14,7 @@ namespace TropApproxTests {
                 -1);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -29,7 +29,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -44,7 +44,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -59,7 +59,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(1);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -78,7 +78,7 @@ namespace TropApproxTests {
                 0, 0, 0);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -102,7 +102,7 @@ namespace TropApproxTests {
                 1);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -118,7 +118,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -140,7 +140,7 @@ namespace TropApproxTests {
                 0, 0, 0);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -160,7 +160,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(2, 1, 0, 1, 2);
 
             // Act
-            var given = Approx.TropicalMatrixMultiplication(A, B);
+            var given = TropicalMatrixOperations.TropicalMatrixMultiplication(A, B);
 
             // Assert
             Assert.AreEqual(expected, given);

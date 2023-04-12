@@ -13,7 +13,7 @@ namespace TropApproxTests {
                 -1);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -29,7 +29,7 @@ namespace TropApproxTests {
                 -1);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -43,7 +43,7 @@ namespace TropApproxTests {
                 -4, -1, 0, -1, -4);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -65,7 +65,7 @@ namespace TropApproxTests {
                 -4);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -81,7 +81,7 @@ namespace TropApproxTests {
                 0);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -99,7 +99,7 @@ namespace TropApproxTests {
                 0);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -113,7 +113,7 @@ namespace TropApproxTests {
                 1);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -126,7 +126,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -140,7 +140,7 @@ namespace TropApproxTests {
                 0, 0, 0);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -154,7 +154,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0, 0, 0);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
@@ -168,7 +168,7 @@ namespace TropApproxTests {
                 -1, 0, -1);
 
             // Act
-            var given = Approx.PseudoInverse(vector);
+            var given = TropicalMatrixOperations.PseudoInverse(vector);
 
             // Assert
             Assert.AreEqual(expected, given);
