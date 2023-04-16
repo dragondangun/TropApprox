@@ -10,14 +10,14 @@ using static AngouriMath.Entity;
 namespace TropApprox {
     public static class TropicalMatrixOperations {
         public static Entity.Matrix PseudoInverse(Entity.Matrix matrix) {
-            Algebras.CurrAlgebra ??= Algebras.MaxPlus;
+            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
 
             matrix = matrix.T;
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
                     var a = ((double)((Number.Real)matrix[i, j])).ToString(CultureInfo.InvariantCulture);
-                    matrix = matrix.WithElement(i, j, Algebras.CurrAlgebra($"({a})^(-1)"));
+                    matrix = matrix.WithElement(i, j, Algebra.CurrAlgebra($"({a})^(-1)"));
                 }
             }
 
@@ -34,7 +34,7 @@ namespace TropApprox {
                 throw new InvalidOperationException();
             }
 
-            Algebras.CurrAlgebra ??= Algebras.MaxPlus;
+            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
 
             var result = MathS.ZeroMatrix(matrixA.RowCount, matrixB.ColumnCount);
 
@@ -44,20 +44,33 @@ namespace TropApprox {
 
 
             double element;
-            for(int rowA = 0, colB = 0; rowA < matrixA.RowCount; colB++) {
-                for(int j = 0; j < matrixA.ColumnCount; j++) {
-                    double a = (double)((Number.Real)matrixA[rowA, j]);
-                    double b = (double)((Number.Real)matrixB[j, colB]);
-                    sb.Append($"({a})*({b})+");
-                }
-                sb.Length--; // delete last "+" sign
-                element = Algebras.CurrAlgebra(sb.ToString());
-                sb.Length = 0;
 
-                result = result.WithElement(rowA, colB, element);
-                if(colB == matrixA.RowCount - 1 || colB == matrixB.ColumnCount - 1) {
-                    colB = -1;
-                    ++rowA;
+            for(int i = 0; i < result.RowCount; i++) {
+                for(int j = 0; j < result.ColumnCount; j++) {
+                    for(int c = 0; c < matrixA.ColumnCount; c++) {
+                        double a = (double)((Number.Real)matrixA[i, c]);
+                        double b = ((double)((Number.Real)matrixB[c, j]));
+                        bool aNeg = double.IsNegativeInfinity(a);
+                        bool bNeg = double.IsNegativeInfinity(b);
+
+                        string astr = ((double)((Number.Real)matrixA[i, c])).ToString(CultureInfo.InvariantCulture);
+                        string bstr = ((double)((Number.Real)matrixB[c, j])).ToString(CultureInfo.InvariantCulture);
+                        if(aNeg || bNeg) {
+                            // do nothing
+                        }
+                        else {
+                            sb.Append($"({astr})*({bstr})+");
+                        }
+                    }
+                    if(sb.Length > 0) {
+                        sb.Length--; // delete last "+" sign
+                        element = Algebra.CurrAlgebra(sb.ToString());
+                        sb.Length = 0;
+                        result = result.WithElement(i, j, element);
+                    }
+                    else {
+                        result = result.WithElement(i, j, double.NegativeInfinity);
+                    }
                 }
             }
 
@@ -79,14 +92,20 @@ namespace TropApprox {
                 throw new InvalidOperationException();
             }
 
-            Algebras.CurrAlgebra ??= Algebras.MaxPlus;
+            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
 
             var result = MathS.ZeroMatrix(matrix.RowCount, matrix.ColumnCount);
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
-                    var a = ((double)((Number.Real)matrix[i, j])).ToString(CultureInfo.InvariantCulture);
-                    result = result.WithElement(i, j, Algebras.CurrAlgebra($"({a})*({scalar})"));
+                    var a = (double)(Number.Real)matrix[i, j];
+                    var astr = a.ToString(CultureInfo.InvariantCulture);
+                    if(double.IsNegativeInfinity(a)) {
+                        result = result.WithElement(i, j, a);
+                    }
+                    else {
+                        result = result.WithElement(i, j, Algebra.CurrAlgebra($"({astr})*({scalar})"));
+                    }
                 }
             }
 
