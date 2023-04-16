@@ -10,14 +10,12 @@ using static AngouriMath.Entity;
 namespace TropApprox {
     public static class TropicalMatrixOperations {
         public static Entity.Matrix PseudoInverse(Entity.Matrix matrix) {
-            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
-
             matrix = matrix.T;
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
                     var a = ((double)((Number.Real)matrix[i, j])).ToString(CultureInfo.InvariantCulture);
-                    matrix = matrix.WithElement(i, j, Algebra.CurrAlgebra($"({a})^(-1)"));
+                    matrix = matrix.WithElement(i, j, Current.Algebra.Calculate($"({a})^(-1)"));
                 }
             }
 
@@ -33,8 +31,6 @@ namespace TropApprox {
                 matrixA.RowCount != matrixB.ColumnCount) {
                 throw new InvalidOperationException();
             }
-
-            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
 
             var result = MathS.ZeroMatrix(matrixA.RowCount, matrixB.ColumnCount);
 
@@ -64,7 +60,7 @@ namespace TropApprox {
                     }
                     if(sb.Length > 0) {
                         sb.Length--; // delete last "+" sign
-                        element = Algebra.CurrAlgebra(sb.ToString());
+                        element = Current.Algebra.Calculate(sb.ToString());
                         sb.Length = 0;
                         result = result.WithElement(i, j, element);
                     }
@@ -92,8 +88,6 @@ namespace TropApprox {
                 throw new InvalidOperationException();
             }
 
-            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
-
             var result = MathS.ZeroMatrix(matrix.RowCount, matrix.ColumnCount);
 
             for(int i = 0; i < matrix.RowCount; i++) {
@@ -104,7 +98,7 @@ namespace TropApprox {
                         result = result.WithElement(i, j, a);
                     }
                     else {
-                        result = result.WithElement(i, j, Algebra.CurrAlgebra($"({astr})*({scalar})"));
+                        result = result.WithElement(i, j, Current.Algebra.Calculate($"({astr})*({scalar})"));
                     }
                 }
             }

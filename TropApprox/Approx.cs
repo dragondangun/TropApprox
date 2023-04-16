@@ -18,14 +18,12 @@ namespace TropApprox {
 
             var result = MathS.ZeroMatrix(K, columnCount);
 
-            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
-
             for(int i = 0; i < K; i++) {
                 for(int j = 0, m = MLeft; m <= MRight; j++, m++) {
                     double b = (double)((Number.Real)vectorX[i]);
                     string str = $"({b.ToString(CultureInfo.InvariantCulture)})^({m}/{d})";
                     Entity expr = str;
-                    var element = Algebra.CurrAlgebra(expr);
+                    var element = Current.Algebra.Calculate(expr);
                     result = result.WithElement(i, j, element);
                 }
             }
@@ -37,8 +35,6 @@ namespace TropApprox {
             var K = vectorX.RowCount;
 
             var result = MathS.ZeroVector(K);
-
-            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
 
             double xValue;
             var xVariable = Var("x");
@@ -53,8 +49,6 @@ namespace TropApprox {
         }
 
         public static Entity.Matrix ApproximateFunction(string function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1) {
-            Algebra.CurrAlgebra ??= Algebra.MaxPlus;
-
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, d);
             var vectorYPseudoInversed = TropicalMatrixOperations.PseudoInverse(vectorY);
@@ -66,7 +60,7 @@ namespace TropApprox {
             
             double delta = (double)((Number.Real)deltaScalar[0]);
             string str = $"({delta.ToString(CultureInfo.InvariantCulture)})^(1/2)";
-            var sqrtDelta = MathS.Vector(Algebra.CurrAlgebra(str));
+            var sqrtDelta = MathS.Vector(Current.Algebra.Calculate(str));
 
             var theta = TropicalMatrixOperations.TropicalMatrixScalarMultiplication(sqrtDelta, important);
 
