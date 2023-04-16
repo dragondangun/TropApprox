@@ -9,6 +9,10 @@ using static AngouriMath.Entity;
 namespace TropApprox {
 
     public abstract class Algebra {
+        double zero;
+        double one;
+        virtual public double Zero { get => zero; }
+        virtual public double One { get => one; }
 
         public abstract double Calculate(Entity expr);
 
@@ -21,6 +25,12 @@ namespace TropApprox {
     }
 
     public class MaxPlus:Algebra {
+        double zero = double.NegativeInfinity;
+        double one = 0;
+
+        override public double Zero { get => zero; }
+        override public double One { get => one; }
+
         override public double Calculate(Entity expr)
         => expr switch {
             Number.Real r => (double)r,
