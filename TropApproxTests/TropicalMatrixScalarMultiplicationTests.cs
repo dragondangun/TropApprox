@@ -3,7 +3,7 @@ using TropApprox;
 
 namespace TropApproxTests {
     [TestClass]
-    public  class TropicalMatrixScalarMultiplicationTests {
+    public class TropicalMatrixScalarMultiplicationTests {
         [TestMethod]
         public void TropicalMatrixScalarMultiplication_A_0_nr_0_B_1() {
             var A = MathS.Matrices.Matrix(2, 1,

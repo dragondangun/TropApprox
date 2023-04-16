@@ -80,6 +80,7 @@ namespace TropApproxTests {
             // Act
             var given = Approx.CreateVectorY(vectorX, function);
 
+            // Assert
             var resultV = given - expected;
 
             bool result = true;
@@ -90,7 +91,6 @@ namespace TropApproxTests {
                 }
             }
 
-            // Assert
             Assert.IsTrue(result);
         }
 
