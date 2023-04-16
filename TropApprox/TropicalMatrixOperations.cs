@@ -14,8 +14,14 @@ namespace TropApprox {
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
-                    var a = ((double)((Number.Real)matrix[i, j])).ToString(CultureInfo.InvariantCulture);
-                    matrix = matrix.WithElement(i, j, Current.Algebra.Calculate($"({a})^(-1)"));
+                    var a = (double)(Number.Real)matrix[i, j];
+                    var astr = a.ToString(CultureInfo.InvariantCulture);
+                    if(a == Current.Algebra.Zero) {
+                        matrix = matrix.WithElement(i, j, Current.Algebra.Calculate($"{Current.Algebra.Zero}"));
+                    }
+                    else {
+                        matrix = matrix.WithElement(i, j, Current.Algebra.Calculate($"({a})^(-1)"));
+                    }
                 }
             }
 
@@ -46,8 +52,8 @@ namespace TropApprox {
                     for(int c = 0; c < matrixA.ColumnCount; c++) {
                         double a = (double)((Number.Real)matrixA[i, c]);
                         double b = ((double)((Number.Real)matrixB[c, j]));
-                        bool aNeg = double.IsNegativeInfinity(a);
-                        bool bNeg = double.IsNegativeInfinity(b);
+                        bool aNeg = Current.Algebra.Zero == a;
+                        bool bNeg = Current.Algebra.Zero == b;
 
                         string astr = ((double)((Number.Real)matrixA[i, c])).ToString(CultureInfo.InvariantCulture);
                         string bstr = ((double)((Number.Real)matrixB[c, j])).ToString(CultureInfo.InvariantCulture);
@@ -65,7 +71,7 @@ namespace TropApprox {
                         result = result.WithElement(i, j, element);
                     }
                     else {
-                        result = result.WithElement(i, j, double.NegativeInfinity);
+                        result = result.WithElement(i, j, Current.Algebra.Zero);
                     }
                 }
             }
@@ -94,7 +100,7 @@ namespace TropApprox {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
                     var a = (double)(Number.Real)matrix[i, j];
                     var astr = a.ToString(CultureInfo.InvariantCulture);
-                    if(double.IsNegativeInfinity(a)) {
+                    if(Current.Algebra.Zero == a) {
                         result = result.WithElement(i, j, a);
                     }
                     else {
