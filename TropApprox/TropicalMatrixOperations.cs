@@ -186,6 +186,29 @@ namespace TropApprox {
             return result;
         }
 
+        public static IEnumerable<Entity.Matrix> GetNPowersOfMatrix(Entity.Matrix matrix, int n, bool withIdentityMatrix = false) {
+            if(n < 1) {
+                throw new ArgumentException("N must be greater or equal to one");
+            }
+
+            List<Entity.Matrix> result = new() {
+                Capacity = withIdentityMatrix ? n+1 : n,
+            };
+
+            if(withIdentityMatrix) {
+                result.Add(GetIdentityMatrix(matrix.RowCount));
+            }
+
+            var poweredMatrix = matrix;
+
+            for(int i = 1; i <= n; i++) {
+                result.Add(poweredMatrix);
+                poweredMatrix = i == n ? poweredMatrix : TropicalMatrixMultiplication(poweredMatrix, matrix);
+            }
+
+            return result;
+        }
+
         public static Entity.Matrix GetIdentityMatrix(int size) {
             if(size < 1) {
                 throw new ArgumentException("Size must be greater or equal to one");
