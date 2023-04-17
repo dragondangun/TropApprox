@@ -186,5 +186,28 @@ namespace TropApprox {
             return result;
         }
 
+        public static Entity.Matrix GetIdentityMatrix(int size) {
+            if(size < 1) {
+                throw new ArgumentException("Size must be greater or equal to one");
+            }
+
+            var result = MathS.ZeroMatrix(size);
+            var tempColumn = MathS.ZeroVector(size);
+
+            tempColumn = tempColumn.WithElement(0, Current.Algebra.One);
+            for(int i = 1; i < size; i++) {
+                tempColumn = tempColumn.WithElement(i, Current.Algebra.Zero);
+            }
+
+            for(int i = 0; i < size-1; i++) {
+                result = result.WithColumn(i, tempColumn);
+                tempColumn = tempColumn.WithElement(i, Current.Algebra.Zero);
+                tempColumn = tempColumn.WithElement(i+1, Current.Algebra.One);
+            }
+
+            result = result.WithColumn(size-1, tempColumn);
+
+            return result;
+        }
     }
 }
