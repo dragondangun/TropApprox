@@ -275,5 +275,44 @@ namespace TropApprox {
 
         public static double GetSpectralRadius(Entity.Matrix matrix) => GetSpectralRadius(matrix, out _);
 
+        public static double Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) {
+            if(!matrix.IsSquare) {
+                throw new ArgumentException("Matrix must be square!");
+            }
+
+            matrixPowers = GetNPowersOfMatrix(matrix, (int)matrix.ColumnCount);
+
+            List<double> tracks = new() {
+                Capacity = matrix.ColumnCount,
+            };
+
+            foreach(var m in matrixPowers) {
+                tracks.Add(tr(m));
+            }
+
+            StringBuilder sb = new() {
+                Capacity = 100,
+            };
+
+            foreach(var t in tracks) {
+                if(t != Current.Algebra.Zero) {
+                    sb.Append($"({t.ToString(CultureInfo.InvariantCulture)})+");
+                }
+            }
+
+            double result;
+            if(sb.Length != 0) {
+                sb.Length--;
+                result = Current.Algebra.Calculate(sb.ToString());
+            }
+            else {
+                result = Current.Algebra.Zero;
+            }
+
+            return result;
+        }
+
+        public static double Tr(Entity.Matrix matrix) => Tr(matrix, out _);
+
     }
 }
