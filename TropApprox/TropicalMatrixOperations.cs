@@ -314,5 +314,29 @@ namespace TropApprox {
 
         public static double Tr(Entity.Matrix matrix) => Tr(matrix, out _);
 
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out double _Tr, out IEnumerable<Entity.Matrix> matrixPowers) {
+            _Tr = Tr(matrix, out matrixPowers);
+
+            (matrixPowers as List<Entity.Matrix>)?.RemoveAt(matrixPowers.Count() - 1);
+            (matrixPowers as List<Entity.Matrix>)?.Insert(0, GetIdentityMatrix(matrix.ColumnCount));
+
+            if(_Tr > Current.Algebra.One) {
+                throw new ArgumentException("Tr(matrix) must <= identity element (1)");
+            }
+
+            var result = (matrixPowers as List<Entity.Matrix>)?[0];
+
+            for(int i = 1; i < (matrixPowers as List<Entity.Matrix>)?.Count; i++) {
+                result = TropicalMatrixAddition(result, (matrixPowers as List<Entity.Matrix>)?[i]);
+            }
+
+            return result;
+        }
+
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix) => KleeneStar(matrix, out _, out _);
+
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out double _Tr) => KleeneStar(matrix, out _Tr, out _);
+
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) => KleeneStar(matrix, out _, out matrixPowers);
     }
 }
