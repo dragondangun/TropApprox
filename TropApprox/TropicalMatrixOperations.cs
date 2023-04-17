@@ -1,8 +1,11 @@
 ﻿using AngouriMath;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static AngouriMath.Entity;
@@ -58,7 +61,7 @@ namespace TropApprox {
                         string astr = ((double)((Number.Real)matrixA[i, c])).ToString(CultureInfo.InvariantCulture);
                         string bstr = ((double)((Number.Real)matrixB[c, j])).ToString(CultureInfo.InvariantCulture);
                         if(aNeg || bNeg) {
-                            // do nothing
+                            continue;
                         }
                         else {
                             sb.Append($"({astr})*({bstr})+");
@@ -111,5 +114,45 @@ namespace TropApprox {
 
             return result;
         }
+
+        public static Entity.Matrix TropicalMatrixAddition(Entity.Matrix matrixA, Entity.Matrix matrixB) {
+            if(matrixA.ColumnCount != matrixB.ColumnCount &&
+                matrixA.RowCount != matrixB.RowCount) {
+                throw new InvalidOperationException();
+            }
+
+            var result = MathS.ZeroMatrix(matrixA.RowCount, matrixA.ColumnCount);
+
+            for(int i = 0; i < result.RowCount; i++) {
+                for(int j = 0; j < result.ColumnCount; j++) {
+                    double a = (double)((Number.Real)matrixA[i, j]);
+                    double b = ((double)((Number.Real)matrixB[i, j]));
+                    int aZero = Current.Algebra.Zero == a ? 1 : 0;
+                    int bZero = Current.Algebra.Zero == b ? 2 : 0;
+                    int isZero = aZero + bZero;
+
+                    string astr = a.ToString(CultureInfo.InvariantCulture);
+                    string bstr = b.ToString(CultureInfo.InvariantCulture);
+
+                    switch(isZero) {
+                        case 0:
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({astr})+({bstr})"));
+                            break;
+                        case 1:
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({bstr})"));
+                            break;
+                        case 2:
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({astr})"));
+                            break;
+                        case 3:
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Zero);
+                            break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
     }
 }
