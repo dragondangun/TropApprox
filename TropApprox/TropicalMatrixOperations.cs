@@ -154,5 +154,37 @@ namespace TropApprox {
             return result;
         }
 
+        public static double tr(Entity.Matrix matrix) {
+            if(!matrix.IsSquare) {
+                throw new ArgumentException("Matrix must be square!");
+            }
+
+            double result;
+            StringBuilder sb = new() {
+                Capacity = 100
+            };
+
+
+            for(int i = 0; i < matrix.RowCount; i++) {
+                double a = (double)((Number.Real)matrix[i, i]);
+
+                if(Current.Algebra.Zero == a) {
+                    continue;
+                }
+
+                sb.Append($"{a.ToString(CultureInfo.InvariantCulture)}+");
+            }
+
+            if(sb.Length == 0) {
+                result = Current.Algebra.Zero;
+            }
+            else {
+                --sb.Length;
+                result = Current.Algebra.Calculate(sb.ToString());
+            }
+
+            return result;
+        }
+
     }
 }
