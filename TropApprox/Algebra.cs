@@ -5,16 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static AngouriMath.Entity;
+using static AngouriMath.MathS;
 
 namespace TropApprox {
 
     public abstract class Algebra {
-        double zero;
-        double one;
-        virtual public double Zero { get => zero; }
-        virtual public double One { get => one; }
+        Number.Real zero;
+        Number.Real one;
+        virtual public Number.Real Zero { get => zero; }
+        virtual public Number.Real One { get => one; }
 
-        public abstract double Calculate(Entity expr);
+        public abstract Entity Calculate(Entity expr);
+        protected abstract Entity Parse(Entity expr);
 
         //public delegate double Algebra(Entity expr);
         //static Algebra currAlgebra;
@@ -25,23 +27,33 @@ namespace TropApprox {
     }
 
     public class MaxPlus:Algebra {
-        double zero = double.NegativeInfinity;
-        double one = 0;
+        Number.Real zero = (Number.Real)double.NegativeInfinity;
+        Number.Real one = 0;
 
-        override public double Zero { get => zero; }
-        override public double One { get => one; }
+        override public Number.Real Zero { get => zero; }
+        override public Number.Real One { get => one; }
 
-        override public double Calculate(Entity expr)
+        override public Entity Calculate(Entity expr) {
+            Entity res = Parse(expr);
+            if(res is not Entity.Matrix) {
+                res = res.EvalNumerical();
+            }
+            return res;
+            //.EvalNumerical().RealPart;
+        }
+
+        override protected Entity Parse(Entity expr)
         => expr switch {
-            Number.Real r => (double)r,
-            Sumf(var a, var b) => (Calculate(a) > Calculate(b)) ? Calculate(a) : Calculate(b),
-            Powf(var a, var b) => Calculate(a) * (double)b.EvalNumerical().RealPart,
-            Mulf(var a, var b) => Calculate(a) + Calculate(b),
-            Divf(var a, var b) => Calculate(a) - Calculate(b),
+            Number.Real r => r,
+            Sumf(var a, var b) => (Parse(a) > Parse(b)).EvalBoolean() ? Parse(a) : Parse(b),
+            Powf(var a, var b) => Parse(a) * (double)b.EvalNumerical().RealPart,
+            Mulf(Entity.Matrix matrixA, Entity.Matrix matrixB) => TropicalMatrixOperations.TropicalMatrixMultiplication(matrixA, matrixB),
+            Mulf(var a, var b) => Parse(a) + Parse(b),
+            Divf(var a, var b) => Parse(a) - Parse(b),
         };
-    }
+}
 
-    public static class Current {
+public static class Current {
         private static Algebra algebra;
         public static Algebra Algebra {
             set => algebra = value;
