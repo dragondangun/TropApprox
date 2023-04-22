@@ -205,6 +205,26 @@ namespace TropApprox {
             return result;
         }
 
+        private static void GetNextNPowersOfMatrix(ref List<Entity.Matrix> matrixPowers, int n, bool withIdentityMatrix = false) {
+            if(n < 1) {
+                throw new ArgumentException("N must be greater or equal to one");
+            }
+
+            //List<Entity.Matrix> result = 
+            int firstIndex = withIdentityMatrix ? 1 : 0;
+
+            matrixPowers.Capacity += n;
+
+            var firstPowerMatrix = matrixPowers[firstIndex];
+            var lastPowerMatrix = matrixPowers[matrixPowers.Count];
+
+            var poweredMatrix = TropicalMatrixMultiplication(firstPowerMatrix, lastPowerMatrix);
+            for(int i = 1; i <= n; i++) {
+                matrixPowers.Add(poweredMatrix);
+                poweredMatrix = i == n ? poweredMatrix : TropicalMatrixMultiplication(poweredMatrix, firstPowerMatrix);
+            }
+        }
+
         public static Entity.Matrix GetIdentityMatrix(int size) {
             if(size < 1) {
                 throw new ArgumentException("Size must be greater or equal to one");
@@ -276,7 +296,7 @@ namespace TropApprox {
                 throw new ArgumentException("Matrix must be square!");
             }
 
-            matrixPowers = GetNPowersOfMatrix(matrix, (int)matrix.ColumnCount);
+            matrixPowers = GetNPowersOfMatrix(matrix, matrix.ColumnCount);
 
             List<Entity> tracks = new() {
                 Capacity = matrix.ColumnCount,
@@ -337,5 +357,46 @@ namespace TropApprox {
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr) => KleeneStar(matrix, out _Tr, out _);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) => KleeneStar(matrix, out _, out matrixPowers);
+
+        public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1) {
+            k = k < 0 ? matrix.ColumnCount - 1 : k;
+            
+            _Tr = Tr(matrix, out matrixPowers);
+
+            List<Entity.Matrix> matrixPowersList = matrixPowers.ToList();
+            matrixPowersList.Insert(0, GetIdentityMatrix(matrix.ColumnCount));
+
+            if((Number.Real)_Tr > Current.Algebra.One) {
+                var c = matrixPowers.Count() - 1;
+                if(c < k) {
+                    GetNextNPowersOfMatrix(ref matrixPowersList, k - c, true);
+                }
+                else if (c > k) {
+                    matrixPowersList.RemoveRange(k, c - k);
+                }
+            }
+            else {
+                matrixPowersList.RemoveAt(matrixPowersList.Count - 1);
+            }
+
+            var result = matrixPowersList[0];
+
+            for(int i = 1; i < matrixPowersList.Count; i++) {
+                result = TropicalMatrixAddition(result, matrixPowersList[i]);
+            }
+
+            matrixPowers = matrixPowersList;
+
+            return result;
+        }
+
+        public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1)
+            => TryKleeneStar(matrix, out _, out matrixPowers, k);
+
+        public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out Entity _Tr, int k = -1)
+            => TryKleeneStar(matrix, out _Tr, out _, k);
+
+        public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, int k = -1)
+            => TryKleeneStar(matrix, out _, out _, k);
     }
 }
