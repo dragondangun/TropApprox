@@ -36,24 +36,23 @@ namespace TropApprox {
         override public Entity Calculate(Entity expr) {
             Entity res = Parse(expr);
             if(res is not Entity.Matrix) {
-                res = res.EvalNumerical();
+                res = res.EvalNumerical().RealPart;
             }
             return res;
-            //.EvalNumerical().RealPart;
         }
 
         override protected Entity Parse(Entity expr)
         => expr switch {
             Number.Real r => r,
             Sumf(var a, var b) => (Parse(a) > Parse(b)).EvalBoolean() ? Parse(a) : Parse(b),
-            Powf(var a, var b) => Parse(a) * (double)b.EvalNumerical().RealPart,
+            Powf(var a, var b) => Parse(a) * b.EvalNumerical().RealPart,
             Mulf(Entity.Matrix matrixA, Entity.Matrix matrixB) => TropicalMatrixOperations.TropicalMatrixMultiplication(matrixA, matrixB),
             Mulf(var a, var b) => Parse(a) + Parse(b),
             Divf(var a, var b) => Parse(a) - Parse(b),
         };
-}
+    }
 
-public static class Current {
+    public static class Current {
         private static Algebra algebra;
         public static Algebra Algebra {
             set => algebra = value;
