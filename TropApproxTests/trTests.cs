@@ -1,5 +1,6 @@
 ﻿using AngouriMath;
 using TropApprox;
+using static AngouriMath.Entity;
 
 namespace TropApproxTests {
     [TestClass]
@@ -12,13 +13,14 @@ namespace TropApproxTests {
                 5, 2, -1,
                 3, 0, 1);
 
-            var expected = 2;
+            Number.Real expected = 2;
 
             // Act
-            var given = TropicalMatrixOperations.tr(A);
+            Number.Real given = (Number.Real)TropicalMatrixOperations.tr(A);
 
             // Assert
-            Assert.AreEqual(expected, given);
+            bool result = !((expected > given) || (given > expected));
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -29,13 +31,14 @@ namespace TropApproxTests {
                 7, 6, 1,
                 5, 4, 2);
 
-            var expected = 6;
+            Number.Real expected = 6;
 
             // Act
-            var given = TropicalMatrixOperations.tr(A);
+            Number.Real given = (Number.Real)TropicalMatrixOperations.tr(A);
 
             // Assert
-            Assert.AreEqual(expected, given);
+            bool result = !((expected > given) || (given > expected));
+            Assert.IsTrue(result);
         }
 
         [TestMethod]
@@ -46,13 +49,14 @@ namespace TropApproxTests {
                 11, 8, 5,
                 9, 6, 3);
 
-            var expected = 8;
+            Number.Real expected = 8;
 
             // Act
-            var given = TropicalMatrixOperations.tr(A);
+            Number.Real given = (Number.Real)TropicalMatrixOperations.tr(A);
 
             // Assert
-            Assert.AreEqual(expected, given);
+            bool result = !((expected > given) || (given > expected));
+            Assert.IsTrue(result);
         }
     }
 }
