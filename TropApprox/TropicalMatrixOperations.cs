@@ -361,25 +361,30 @@ namespace TropApprox {
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) => KleeneStar(matrix, out _, out matrixPowers);
 
-        public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1) {
+        public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out Entity? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1) {
             k = k < 0 ? matrix.ColumnCount - 1 : k;
-            
-            _Tr = Tr(matrix, out matrixPowers);
+            List<Entity.Matrix> matrixPowersList;
+            if(!matrix.IsSquare) {
+                _Tr = Tr(matrix, out matrixPowers);
+                matrixPowersList = matrixPowers.ToList();
+                matrixPowersList.Insert(0, GetIdentityMatrix(matrix.ColumnCount));
 
-            List<Entity.Matrix> matrixPowersList = matrixPowers.ToList();
-            matrixPowersList.Insert(0, GetIdentityMatrix(matrix.ColumnCount));
-
-            if((Number.Real)_Tr > Current.Algebra.One) {
-                var c = matrixPowers.Count() - 1;
-                if(c < k) {
-                    GetNextNPowersOfMatrix(ref matrixPowersList, k - c, true);
+                if((Number.Real)_Tr > Current.Algebra.One) {
+                    var c = matrixPowersList.Count - 1;
+                    if(c < k) {
+                        GetNextNPowersOfMatrix(ref matrixPowersList, k - c, true);
+                    }
+                    else if(c > k) {
+                        matrixPowersList.RemoveRange(k, c - k);
+                    }
                 }
-                else if (c > k) {
-                    matrixPowersList.RemoveRange(k, c - k);
+                else {
+                    matrixPowersList.RemoveAt(matrixPowersList.Count - 1);
                 }
             }
             else {
-                matrixPowersList.RemoveAt(matrixPowersList.Count - 1);
+                _Tr = null;
+                matrixPowersList = GetNPowersOfMatrix(matrix, k, true).ToList();
             }
 
             var result = matrixPowersList[0];
