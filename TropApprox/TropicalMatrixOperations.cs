@@ -406,5 +406,22 @@ namespace TropApprox {
 
         public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, int k = -1)
             => TryKleeneStar(matrix, out _, out _, k);
+
+        public static IEnumerable<Entity.Matrix> KleeneStarEnumerator(Entity.Matrix matrix) {
+            Entity.Matrix result = GetIdentityMatrix(matrix.ColumnCount);
+            Entity.Matrix power = GetIdentityMatrix(matrix.ColumnCount);
+            Entity.Matrix prev = result;
+            while(true) {
+                yield return result;
+
+                prev = result;
+                power = TropicalMatrixMultiplication(power, matrix);
+                result = TropicalMatrixAddition(result, power);
+
+                if(prev == result) {
+                    break;
+                }
+            }
+        }
     }
 }
