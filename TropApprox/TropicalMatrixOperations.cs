@@ -332,8 +332,11 @@ namespace TropApprox {
         public static Entity Tr(Entity.Matrix matrix) => Tr(matrix, out _);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers) {
-            _Tr = Tr(matrix, out matrixPowers);
+            if(!matrix.IsSquare) {
+                throw new ArgumentException("Kleene star isn't defined. Use TryKleeneStar() or KleeneStarEnumerator()!");
+            }
 
+            _Tr = Tr(matrix, out matrixPowers);
 
             (matrixPowers as List<Entity.Matrix>)?.RemoveAt(matrixPowers.Count() - 1);
             (matrixPowers as List<Entity.Matrix>)?.Insert(0, GetIdentityMatrix(matrix.ColumnCount));
