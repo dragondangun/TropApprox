@@ -17,8 +17,7 @@ namespace TropApprox {
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
-                    var a = (double)(Number.Real)matrix[i, j];
-                    var astr = a.ToString(CultureInfo.InvariantCulture);
+                    var a = (Number.Real)matrix[i, j];
                     if(a == Current.Algebra.Zero) {
                         matrix = matrix.WithElement(i, j, Current.Algebra.Calculate($"{Current.Algebra.Zero}"));
                     }
@@ -48,23 +47,21 @@ namespace TropApprox {
             };
 
 
-            double element;
+            Entity element;
 
             for(int i = 0; i < result.RowCount; i++) {
                 for(int j = 0; j < result.ColumnCount; j++) {
                     for(int c = 0; c < matrixA.ColumnCount; c++) {
-                        double a = (double)((Number.Real)matrixA[i, c]);
-                        double b = ((double)((Number.Real)matrixB[c, j]));
+                        var a = matrixA[i, c];
+                        var b = matrixB[c, j];
                         bool aNeg = Current.Algebra.Zero == a;
                         bool bNeg = Current.Algebra.Zero == b;
 
-                        string astr = ((double)((Number.Real)matrixA[i, c])).ToString(CultureInfo.InvariantCulture);
-                        string bstr = ((double)((Number.Real)matrixB[c, j])).ToString(CultureInfo.InvariantCulture);
                         if(aNeg || bNeg) {
                             continue;
                         }
                         else {
-                            sb.Append($"({astr})*({bstr})+");
+                            sb.Append($"({a})*({b})+");
                         }
                     }
                     if(sb.Length > 0) {
@@ -84,13 +81,13 @@ namespace TropApprox {
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB) {
             Entity.Matrix matrix;
-            string scalar;
+            Entity scalar;
             if(matrixA.IsScalar) {
-                scalar = ((double)((Number.Real)matrixA[0, 0])).ToString(CultureInfo.InvariantCulture);
+                scalar = matrixA[0, 0];
                 matrix = matrixB;
             }
             else if(matrixB.IsScalar) {
-                scalar = ((double)((Number.Real)matrixB[0, 0])).ToString(CultureInfo.InvariantCulture);
+                scalar = matrixB[0, 0];
                 matrix = matrixA;
             }
             else {
@@ -101,13 +98,12 @@ namespace TropApprox {
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
-                    var a = (double)(Number.Real)matrix[i, j];
-                    var astr = a.ToString(CultureInfo.InvariantCulture);
+                    var a = matrix[i, j];
                     if(Current.Algebra.Zero == a) {
                         result = result.WithElement(i, j, a);
                     }
                     else {
-                        result = result.WithElement(i, j, Current.Algebra.Calculate($"({astr})*({scalar})"));
+                        result = result.WithElement(i, j, Current.Algebra.Calculate($"({a})*({scalar})"));
                     }
                 }
             }
@@ -125,24 +121,24 @@ namespace TropApprox {
 
             for(int i = 0; i < result.RowCount; i++) {
                 for(int j = 0; j < result.ColumnCount; j++) {
-                    double a = (double)((Number.Real)matrixA[i, j]);
-                    double b = ((double)((Number.Real)matrixB[i, j]));
+                    var a = matrixA[i, j];
+                    var b = matrixB[i, j];
                     int aZero = Current.Algebra.Zero == a ? 1 : 0;
                     int bZero = Current.Algebra.Zero == b ? 2 : 0;
                     int isZero = aZero + bZero;
 
-                    string astr = a.ToString(CultureInfo.InvariantCulture);
-                    string bstr = b.ToString(CultureInfo.InvariantCulture);
+                    //string astr = a.ToString(CultureInfo.InvariantCulture);
+                    //string bstr = b.ToString(CultureInfo.InvariantCulture);
 
                     switch(isZero) {
                         case 0:
-                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({astr})+({bstr})"));
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({a})+({b})"));
                             break;
                         case 1:
-                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({bstr})"));
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({b})"));
                             break;
                         case 2:
-                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({astr})"));
+                            result = result.WithElement(i, j, (Entity)Current.Algebra.Calculate($"({a})"));
                             break;
                         case 3:
                             result = result.WithElement(i, j, (Entity)Current.Algebra.Zero);
@@ -154,25 +150,25 @@ namespace TropApprox {
             return result;
         }
 
-        public static double tr(Entity.Matrix matrix) {
+        public static Entity tr(Entity.Matrix matrix) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
 
-            double result;
+            Entity result;
             StringBuilder sb = new() {
                 Capacity = 100
             };
 
 
             for(int i = 0; i < matrix.RowCount; i++) {
-                double a = (double)((Number.Real)matrix[i, i]);
+                var a = matrix[i, i];
 
                 if(Current.Algebra.Zero == a) {
                     continue;
                 }
 
-                sb.Append($"{a.ToString(CultureInfo.InvariantCulture)}+");
+                sb.Append($"{a}+");
             }
 
             if(sb.Length == 0) {
@@ -233,14 +229,14 @@ namespace TropApprox {
             return result;
         }
 
-        public static double GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) {
+        public static Entity GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
 
             matrixPowers = GetNPowersOfMatrix(matrix, (int)matrix.ColumnCount);
 
-            List<double> tracks = new() {
+            List<Entity> tracks = new() {
                 Capacity = matrix.ColumnCount,
             };
 
@@ -256,12 +252,12 @@ namespace TropApprox {
 
             foreach(var t in tracks) {
                 if(t != Current.Algebra.Zero) {
-                    sb.Append($"({t.ToString(CultureInfo.InvariantCulture)})^(1/{i})+");
+                    sb.Append($"({t})^(1/{i})+");
                 }
                 i++;
             }
 
-            double result;
+            Entity result;
             if(sb.Length != 0) {
                 sb.Length--;
                 result = Current.Algebra.Calculate(sb.ToString());
@@ -273,16 +269,16 @@ namespace TropApprox {
             return result;
         }
 
-        public static double GetSpectralRadius(Entity.Matrix matrix) => GetSpectralRadius(matrix, out _);
+        public static Entity GetSpectralRadius(Entity.Matrix matrix) => GetSpectralRadius(matrix, out _);
 
-        public static double Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) {
+        public static Entity Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
 
             matrixPowers = GetNPowersOfMatrix(matrix, (int)matrix.ColumnCount);
 
-            List<double> tracks = new() {
+            List<Entity> tracks = new() {
                 Capacity = matrix.ColumnCount,
             };
 
@@ -296,11 +292,11 @@ namespace TropApprox {
 
             foreach(var t in tracks) {
                 if(t != Current.Algebra.Zero) {
-                    sb.Append($"({t.ToString(CultureInfo.InvariantCulture)})+");
+                    sb.Append($"({t})+");
                 }
             }
 
-            double result;
+            Entity result;
             if(sb.Length != 0) {
                 sb.Length--;
                 result = Current.Algebra.Calculate(sb.ToString());
@@ -309,18 +305,20 @@ namespace TropApprox {
                 result = Current.Algebra.Zero;
             }
 
+            //throw new NotImplementedException();
             return result;
         }
 
-        public static double Tr(Entity.Matrix matrix) => Tr(matrix, out _);
+        public static Entity Tr(Entity.Matrix matrix) => Tr(matrix, out _);
 
-        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out double _Tr, out IEnumerable<Entity.Matrix> matrixPowers) {
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers) {
             _Tr = Tr(matrix, out matrixPowers);
+
 
             (matrixPowers as List<Entity.Matrix>)?.RemoveAt(matrixPowers.Count() - 1);
             (matrixPowers as List<Entity.Matrix>)?.Insert(0, GetIdentityMatrix(matrix.ColumnCount));
 
-            if(_Tr > Current.Algebra.One) {
+            if((Number.Real)_Tr > Current.Algebra.One) {
                 throw new ArgumentException("Tr(matrix) must <= identity element (1)");
             }
 
@@ -330,12 +328,13 @@ namespace TropApprox {
                 result = TropicalMatrixAddition(result, (matrixPowers as List<Entity.Matrix>)?[i]);
             }
 
+            //throw new NotImplementedException();
             return result;
         }
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix) => KleeneStar(matrix, out _, out _);
 
-        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out double _Tr) => KleeneStar(matrix, out _Tr, out _);
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr) => KleeneStar(matrix, out _Tr, out _);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) => KleeneStar(matrix, out _, out matrixPowers);
     }
