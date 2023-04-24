@@ -20,10 +20,7 @@ namespace TropApprox {
 
             for(int i = 0; i < K; i++) {
                 for(int j = 0, m = MLeft; m <= MRight; j++, m++) {
-                    double b = (double)((Number.Real)vectorX[i]);
-                    string str = $"({b.ToString(CultureInfo.InvariantCulture)})^({m}/{d})";
-                    Entity expr = str;
-                    var element = Current.Algebra.Calculate(expr);
+                    var element = Current.Algebra.Calculate($"({vectorX[i]})^({m}/{d})");
                     result = result.WithElement(i, j, element);
                 }
             }
@@ -36,12 +33,11 @@ namespace TropApprox {
 
             var result = MathS.ZeroVector(K);
 
-            double xValue;
             var xVariable = Var("x");
 
             for(int i = 0; i < K; i++) {
-                xValue = (double)((Number.Real)vectorX[i]);
-                var val = ((double)function.Substitute(xVariable, xValue).EvalNumerical().RealPart); ;
+                var xValue = vectorX[i];
+                var val = function.Substitute(xVariable, xValue).EvalNumerical().RealPart; ;
                 result = result.WithElement(i, val);
             }
 
