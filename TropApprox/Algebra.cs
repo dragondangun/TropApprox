@@ -20,6 +20,13 @@ namespace TropApprox {
     }
 
     public class MaxPlus:Algebra {
+        private static MaxPlus instance;
+        public static MaxPlus Instance {
+            get => instance ?? new MaxPlus();
+        }
+
+        protected MaxPlus() { }
+
         Number.Real zero = (Number.Real)double.NegativeInfinity;
         Number.Real one = 0;
 
@@ -58,7 +65,7 @@ namespace TropApprox {
             set => algebra = value;
             get { 
                 if(algebra is null) {
-                    algebra = new MaxPlus();
+                    algebra = MaxPlus.Instance;
                 }
                 return algebra;
             }
