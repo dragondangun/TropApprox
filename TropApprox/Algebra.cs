@@ -17,13 +17,6 @@ namespace TropApprox {
 
         public abstract Entity Calculate(Entity expr);
         protected abstract Entity Parse(Entity expr);
-
-        //public delegate double Algebra(Entity expr);
-        //static Algebra currAlgebra;
-        //public static Algebra CurrAlgebra {
-        //    get => currAlgebra;
-        //    set => currAlgebra = value;
-        //}
     }
 
     public class MaxPlus:Algebra {
