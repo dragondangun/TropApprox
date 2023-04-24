@@ -37,6 +37,7 @@ namespace TropApprox {
         override protected Entity Parse(Entity expr)
         => expr switch {
             Number.Real r => r,
+            Entity.Matrix m => m,
             Sumf(var a, var b) => sum(a, b),
             Powf(var a, var b) => Parse(a) * b.EvalNumerical().RealPart,
             Mulf(Entity.Matrix matrixA, Entity.Matrix matrixB) => TropicalMatrixOperations.TropicalMatrixMultiplication(matrixA, matrixB),
