@@ -45,6 +45,7 @@ namespace TropApprox {
         => expr switch {
             Number.Real r => r,
             Entity.Matrix m => m,
+            Sumf(Entity.Matrix matrixA, Entity.Matrix matrixB) => TropicalMatrixOperations.TropicalMatrixAddition(matrixA, matrixB),
             Sumf(var a, var b) => sum(a, b),
             Powf(var a, var b) => Parse(a) * b.EvalNumerical().RealPart,
             Mulf(Entity.Matrix matrixA, Entity.Matrix matrixB) => TropicalMatrixOperations.TropicalMatrixMultiplication(matrixA, matrixB),
