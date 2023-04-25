@@ -184,12 +184,12 @@ namespace TropApprox {
 
         #region tr
 
-        public static Entity tr(Entity.Matrix matrix, Algebra algebra) {
+        public static Number.Real tr(Entity.Matrix matrix, Algebra algebra) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
 
-            Entity result;
+            Number.Real result;
             StringBuilder sb = new() {
                 Capacity = 100
             };
@@ -210,7 +210,7 @@ namespace TropApprox {
             }
             else {
                 --sb.Length;
-                result = algebra.Calculate(sb.ToString());
+                result = (Number.Real)algebra.Calculate(sb.ToString());
             }
 
             return result;
@@ -218,7 +218,7 @@ namespace TropApprox {
         
         #region tr overloading
 
-        public static Entity tr(Entity.Matrix matrix) => tr(matrix, Current.Algebra);
+        public static Number.Real tr(Entity.Matrix matrix) => tr(matrix, Current.Algebra);
         #endregion
         #endregion
 
@@ -368,14 +368,14 @@ namespace TropApprox {
 
         #region Tr
 
-        public static Entity Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
+        public static Number.Real Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
 
             matrixPowers = GetNPowersOfMatrix(matrix, matrix.ColumnCount, algebra);
 
-            List<Entity> tracks = new() {
+            List<Number.Real> tracks = new() {
                 Capacity = matrix.ColumnCount,
             };
 
@@ -393,10 +393,10 @@ namespace TropApprox {
                 }
             }
 
-            Entity result;
+            Number.Real result;
             if(sb.Length != 0) {
                 sb.Length--;
-                result = algebra.Calculate(sb.ToString());
+                result = (Number.Real)algebra.Calculate(sb.ToString());
             }
             else {
                 result = algebra.Zero;
@@ -407,12 +407,12 @@ namespace TropApprox {
         
         #region Tr overloadings
 
-        public static Entity Tr(Entity.Matrix matrix, Algebra algebra) => Tr(matrix, out _, algebra);
+        public static Number.Real Tr(Entity.Matrix matrix, Algebra algebra) => Tr(matrix, out _, algebra);
 
-        public static Entity Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers)
+        public static Number.Real Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers)
             => Tr(matrix, out matrixPowers, Current.Algebra);
 
-        public static Entity Tr(Entity.Matrix matrix) => Tr(matrix, out _);
+        public static Number.Real Tr(Entity.Matrix matrix) => Tr(matrix, out _);
         #endregion
         #endregion
 
