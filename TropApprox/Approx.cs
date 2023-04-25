@@ -56,9 +56,7 @@ namespace TropApprox {
             var matrixXMultImportantPseudoInversed = TropicalMatrixOperations.PseudoInverse(matrixXMultImportant, algebra);
             var deltaScalar = TropicalMatrixOperations.TropicalMatrixMultiplication(matrixXMultImportantPseudoInversed, vectorY, algebra);
 
-            double delta = (double)((Number.Real)deltaScalar[0]);
-            string str = $"({delta.ToString(CultureInfo.InvariantCulture)})^(1/2)";
-            var sqrtDelta = MathS.Vector(algebra.Calculate(str));
+            var sqrtDelta = MathS.Vector(algebra.Calculate($"({deltaScalar[0]})^(1/2)"));
 
             var theta = TropicalMatrixOperations.TropicalMatrixScalarMultiplication(sqrtDelta, important, algebra);
 
