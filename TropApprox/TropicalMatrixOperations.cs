@@ -98,21 +98,7 @@ namespace TropApprox {
 
         #region Tropical Matrix Scalar Multiplication
 
-        public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
-            Entity.Matrix matrix;
-            Entity scalar;
-            if(matrixA.IsScalar) {
-                scalar = matrixA[0, 0];
-                matrix = matrixB;
-            }
-            else if(matrixB.IsScalar) {
-                scalar = matrixB[0, 0];
-                matrix = matrixA;
-            }
-            else {
-                throw new ArgumentException("None of matrices is scalar. Try TropicalMatrixMultiplication.");
-            }
-
+        public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrix, Number.Real scalar, Algebra algebra) {
             var result = MathS.ZeroMatrix(matrix.RowCount, matrix.ColumnCount);
 
             for(int i = 0; i < matrix.RowCount; i++) {
@@ -129,8 +115,30 @@ namespace TropApprox {
 
             return result;
         }
-        
+
+        public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
+            Entity.Matrix matrix;
+            Number.Real scalar;
+            if(matrixA.IsScalar) {
+                scalar = (Number.Real)matrixA[0, 0];
+                matrix = matrixB;
+            }
+            else if(matrixB.IsScalar) {
+                scalar = (Number.Real)matrixB[0, 0];
+                matrix = matrixA;
+            }
+            else {
+                throw new ArgumentException("None of matrices is scalar. Try TropicalMatrixMultiplication.");
+            }
+
+            return TropicalMatrixScalarMultiplication(matrix, scalar, algebra);
+        }
+
         #region Tropical Matrix Scalar Multiplication overloading
+
+        public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrix, Number.Real scalar)
+            => TropicalMatrixScalarMultiplication(matrix, scalar, Current.Algebra);
+
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB)
             => TropicalMatrixScalarMultiplication(matrixA, matrixB, Current.Algebra);
