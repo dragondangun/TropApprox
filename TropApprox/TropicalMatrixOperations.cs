@@ -376,7 +376,7 @@ namespace TropApprox {
 
         #region Get Spectral Radius
 
-        public static Entity GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
+        public static Number.Real GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
@@ -404,10 +404,10 @@ namespace TropApprox {
                 i++;
             }
 
-            Entity result;
+            Number.Real result;
             if(sb.Length != 0) {
                 sb.Length--;
-                result = algebra.Calculate(sb.ToString());
+                result = (Number.Real)algebra.Calculate(sb.ToString());
             }
             else {
                 result = algebra.Zero;
@@ -418,12 +418,12 @@ namespace TropApprox {
 
         #region Get Spectral Radius overloadings
 
-        public static Entity GetSpectralRadius(Entity.Matrix matrix, Algebra algebra) => GetSpectralRadius(matrix, out _, algebra);
+        public static Number.Real GetSpectralRadius(Entity.Matrix matrix, Algebra algebra) => GetSpectralRadius(matrix, out _, algebra);
 
-        public static Entity GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers)
+        public static Number.Real GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers)
             => GetSpectralRadius(matrix, out matrixPowers, Current.Algebra);
 
-        public static Entity GetSpectralRadius(Entity.Matrix matrix) => GetSpectralRadius(matrix, out _);
+        public static Number.Real GetSpectralRadius(Entity.Matrix matrix) => GetSpectralRadius(matrix, out _);
         #endregion
         #endregion
 
