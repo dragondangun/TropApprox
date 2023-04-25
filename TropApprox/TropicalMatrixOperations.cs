@@ -542,7 +542,7 @@ namespace TropApprox {
                 matrixPowersList = GetNPowersOfMatrix(matrix, k, algebra, true).ToList();
             }
 
-            var result = k > 0 ? matrixPowersList[0] : null;
+            var result = GetZeroMatrix(matrix.RowCount, matrix.ColumnCount, algebra);
             foreach(var m in matrixPowersList) {
                 result = TropicalMatrixAddition(result, m, algebra);
             }
