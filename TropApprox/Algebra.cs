@@ -10,8 +10,8 @@ using static AngouriMath.MathS;
 namespace TropApprox {
 
     public abstract class Algebra {
-        Number.Real zero;
-        Number.Real one;
+        readonly Number.Real zero;
+        readonly Number.Real one;
         virtual public Number.Real Zero { get => zero; }
         virtual public Number.Real One { get => one; }
 
@@ -27,8 +27,8 @@ namespace TropApprox {
 
         protected MaxPlus() { }
 
-        Number.Real zero = (Number.Real)double.NegativeInfinity;
-        Number.Real one = 0;
+        readonly Number.Real zero = (Number.Real)double.NegativeInfinity;
+        readonly Number.Real one = 0;
 
         override public Number.Real Zero { get => zero; }
         override public Number.Real One { get => one; }
