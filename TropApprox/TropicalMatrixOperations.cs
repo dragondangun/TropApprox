@@ -581,7 +581,7 @@ namespace TropApprox {
 
         public static IEnumerable<Entity.Matrix> KleeneStarEnumerator(Entity.Matrix matrix, Algebra algebra) {
             Entity.Matrix result = GetIdentityMatrix(matrix.ColumnCount, algebra);
-            Entity.Matrix power = GetIdentityMatrix(matrix.ColumnCount, algebra);
+            Entity.Matrix power = result;
             Entity.Matrix prev;
             while(true) {
                 yield return result;
@@ -591,7 +591,7 @@ namespace TropApprox {
                 result = TropicalMatrixAddition(result, power, algebra);
 
                 if(prev == result) {
-                    break;
+                    yield break;
                 }
             }
         }
