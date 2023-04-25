@@ -12,6 +12,8 @@ using static AngouriMath.Entity;
 
 namespace TropApprox {
     public static class TropicalMatrixOperations {
+
+        #region Pseudoinverse
         public static Entity.Matrix PseudoInverse(Entity.Matrix matrix, Algebra algebra) {
             matrix = matrix.T;
 
@@ -29,8 +31,14 @@ namespace TropApprox {
 
             return matrix;
         }
-        
+
+        #region Pseudoinverse overloading
         public static Entity.Matrix PseudoInverse(Entity.Matrix matrix) => PseudoInverse(matrix, Current.Algebra);
+
+        #endregion
+        #endregion
+
+        #region Tropical Matrix Multiplication
 
         public static Entity.Matrix TropicalMatrixMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
             if(matrixA.IsScalar || matrixB.IsScalar) {
@@ -79,8 +87,16 @@ namespace TropApprox {
 
             return result;
         }
+
+        #region Tropical Matrix Multiplication overloading
+
         public static Entity.Matrix TropicalMatrixMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB)
             => TropicalMatrixMultiplication(matrixA, matrixB, Current.Algebra);
+
+        #endregion
+        #endregion
+
+        #region Tropical Matrix Scalar Multiplication
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
             Entity.Matrix matrix;
@@ -113,9 +129,15 @@ namespace TropApprox {
 
             return result;
         }
+        
+        #region Tropical Matrix Scalar Multiplication overloading
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB)
             => TropicalMatrixScalarMultiplication(matrixA, matrixB, Current.Algebra);
+        #endregion
+        #endregion
+
+        #region Tropical Matrix Addition
 
         public static Entity.Matrix TropicalMatrixAddition(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
             if(matrixA.ColumnCount != matrixB.ColumnCount &&
@@ -152,9 +174,15 @@ namespace TropApprox {
 
             return result;
         }
+        
+        #region Tropical Matrix Addition overloading
 
         public static Entity.Matrix TropicalMatrixAddition(Entity.Matrix matrixA, Entity.Matrix matrixB)
             => TropicalMatrixAddition(matrixA, matrixB, Current.Algebra);
+        #endregion
+        #endregion
+
+        #region tr
 
         public static Entity tr(Entity.Matrix matrix, Algebra algebra) {
             if(!matrix.IsSquare) {
@@ -187,9 +215,14 @@ namespace TropApprox {
 
             return result;
         }
+        
+        #region tr overloading
 
         public static Entity tr(Entity.Matrix matrix) => tr(matrix, Current.Algebra);
+        #endregion
+        #endregion
 
+        #region Get N Powers of Matrix
         public static IEnumerable<Entity.Matrix> GetNPowersOfMatrix(Entity.Matrix matrix, int n, Algebra algebra, bool withIdentityMatrix = false) {
             if(n < 1) {
                 throw new ArgumentException("N must be greater or equal to one");
@@ -213,8 +246,14 @@ namespace TropApprox {
             return result;
         }
 
+        #region Get N Powers of Matrix overloading
+
         public static IEnumerable<Entity.Matrix> GetNPowersOfMatrix(Entity.Matrix matrix, int n, bool withIdentityMatrix = false)
             => GetNPowersOfMatrix(matrix, n, Current.Algebra, withIdentityMatrix);
+        #endregion
+        #endregion
+
+        #region Get Next N Powers of Matrix
 
         private static void GetNextNPowersOfMatrix(ref List<Entity.Matrix> matrixPowers, int n, Algebra algebra, bool withIdentityMatrix = false) {
             if(n < 1) {
@@ -235,9 +274,14 @@ namespace TropApprox {
             }
         }
 
+        #region Get Next N Powers of Matrix overloading
+
         private static void GetNextNPowersOfMatrix(ref List<Entity.Matrix> matrixPowers, int n, bool withIdentityMatrix = false)
             => GetNextNPowersOfMatrix(ref matrixPowers, n, Current.Algebra, withIdentityMatrix);
+        #endregion
+        #endregion
 
+        #region Get Identity Matrix
 
         public static Entity.Matrix GetIdentityMatrix(int size, Algebra algebra) {
             if(size < 1) {
@@ -263,7 +307,13 @@ namespace TropApprox {
             return result;
         }
 
+        #region Get Identity Matrix overloading
+
         public static Entity.Matrix GetIdentityMatrix(int size) => GetIdentityMatrix(size, Current.Algebra);
+        #endregion
+        #endregion
+
+        #region Get Spectral Radius
 
         public static Entity GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
@@ -305,12 +355,18 @@ namespace TropApprox {
             return result;
         }
 
+        #region Get Spectral Radius overloadings
+
         public static Entity GetSpectralRadius(Entity.Matrix matrix, Algebra algebra) => GetSpectralRadius(matrix, out _, algebra);
 
         public static Entity GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers)
             => GetSpectralRadius(matrix, out matrixPowers, Current.Algebra);
 
         public static Entity GetSpectralRadius(Entity.Matrix matrix) => GetSpectralRadius(matrix, out _);
+        #endregion
+        #endregion
+
+        #region Tr
 
         public static Entity Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
@@ -348,6 +404,8 @@ namespace TropApprox {
 
             return result;
         }
+        
+        #region Tr overloadings
 
         public static Entity Tr(Entity.Matrix matrix, Algebra algebra) => Tr(matrix, out _, algebra);
 
@@ -355,6 +413,10 @@ namespace TropApprox {
             => Tr(matrix, out matrixPowers, Current.Algebra);
 
         public static Entity Tr(Entity.Matrix matrix) => Tr(matrix, out _);
+        #endregion
+        #endregion
+
+        #region Kleene Star
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
@@ -379,6 +441,8 @@ namespace TropApprox {
             return result;
         }
 
+        #region Kleene Star overloadings
+
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, Algebra algebra) => KleeneStar(matrix, out _, out _, algebra);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, Algebra algebra) => KleeneStar(matrix, out _Tr, out _, algebra);
@@ -394,6 +458,9 @@ namespace TropApprox {
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr) => KleeneStar(matrix, out _Tr, out _);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) => KleeneStar(matrix, out _, out matrixPowers);
+        #endregion
+
+        #region Try Kleene Star
 
         public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out Entity? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1) {
             k = k < 0 ? matrix.ColumnCount - 1 : k;
@@ -431,6 +498,8 @@ namespace TropApprox {
 
             return result;
         }
+        
+        #region Try Kleene Star overloadings
 
         public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1)
             => TryKleeneStar(matrix, out _, out matrixPowers, algebra, k);
@@ -453,6 +522,10 @@ namespace TropApprox {
         public static Entity.Matrix TryKleeneStar(Entity.Matrix matrix, int k = -1)
             => TryKleeneStar(matrix, out _, out _, k);
 
+        #endregion
+        #endregion
+        
+        #region Kleene Star Enumerator
 
         public static IEnumerable<Entity.Matrix> KleeneStarEnumerator(Entity.Matrix matrix, Algebra algebra) {
             Entity.Matrix result = GetIdentityMatrix(matrix.ColumnCount, algebra);
@@ -471,7 +544,12 @@ namespace TropApprox {
             }
         }
 
+        #region Kleene Star Enumerator overloading
+
         public static IEnumerable<Entity.Matrix> KleeneStarEnumerator(Entity.Matrix matrix) => KleeneStarEnumerator(matrix, Current.Algebra);
 
+        #endregion
+        #endregion
+        #endregion
     }
 }
