@@ -418,7 +418,7 @@ namespace TropApprox {
 
         #region Kleene Star
 
-        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Number.Real _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Kleene star isn't defined. Use TryKleeneStar() or KleeneStarEnumerator()!");
             }
@@ -446,17 +446,17 @@ namespace TropApprox {
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, Algebra algebra) => KleeneStar(matrix, out _, out _, algebra);
 
-        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, Algebra algebra) => KleeneStar(matrix, out _Tr, out _, algebra);
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Number.Real _Tr, Algebra algebra) => KleeneStar(matrix, out _Tr, out _, algebra);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) 
             => KleeneStar(matrix, out _, out matrixPowers, algebra);
 
-        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr, out IEnumerable<Entity.Matrix> matrixPowers)
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Number.Real _Tr, out IEnumerable<Entity.Matrix> matrixPowers)
             => KleeneStar(matrix, out _Tr, out matrixPowers, Current.Algebra);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix) => KleeneStar(matrix, out _, out _);
 
-        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Entity _Tr) => KleeneStar(matrix, out _Tr, out _);
+        public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Number.Real _Tr) => KleeneStar(matrix, out _Tr, out _);
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers) => KleeneStar(matrix, out _, out matrixPowers);
         #endregion
