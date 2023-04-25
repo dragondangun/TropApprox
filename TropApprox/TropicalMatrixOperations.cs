@@ -463,7 +463,7 @@ namespace TropApprox {
 
         #region Try Kleene Star
 
-        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Entity? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1) {
+        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Number.Real? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1) {
             k = k < 0 ? matrix.ColumnCount - 1 : k;
             List<Entity.Matrix> matrixPowersList;
             if(!matrix.IsSquare) {
@@ -471,7 +471,7 @@ namespace TropApprox {
                 matrixPowersList = matrixPowers.ToList();
                 matrixPowersList.Insert(0, GetIdentityMatrix(matrix.ColumnCount, algebra));
 
-                if((Number.Real)_Tr > algebra.One) {
+                if(_Tr > algebra.One) {
                     var c = matrixPowersList.Count - 1;
                     if(c < k) {
                         GetNextNPowersOfMatrix(ref matrixPowersList, k - c, algebra, true);
@@ -503,19 +503,19 @@ namespace TropApprox {
         public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1)
             => TryKleeneStar(matrix, out _, out matrixPowers, algebra, k);
 
-        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Entity _Tr, Algebra algebra, int k = -1)
+        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Number.Real? _Tr, Algebra algebra, int k = -1)
             => TryKleeneStar(matrix, out _Tr, out _, algebra, k);
 
         public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, Algebra algebra, int k = -1)
             => TryKleeneStar(matrix, out _, out _, algebra, k);
 
-        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Entity? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1)
+        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Number.Real? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1)
             => TryKleeneStar(matrix, out _Tr, out matrixPowers, Current.Algebra, k);
 
         public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, int k = -1)
             => TryKleeneStar(matrix, out _, out matrixPowers, k);
 
-        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Entity _Tr, int k = -1)
+        public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Number.Real? _Tr, int k = -1)
             => TryKleeneStar(matrix, out _Tr, out _, k);
 
         public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, int k = -1)
