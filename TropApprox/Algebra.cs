@@ -22,7 +22,10 @@ namespace TropApprox {
     public class MaxPlus:Algebra {
         private static MaxPlus instance;
         public static MaxPlus Instance {
-            get => instance ?? new MaxPlus();
+            get {
+                instance ??= new MaxPlus();
+                return instance;
+            }
         }
 
         protected MaxPlus() { }
@@ -65,9 +68,7 @@ namespace TropApprox {
         public static Algebra Algebra {
             set => algebra = value;
             get { 
-                if(algebra is null) {
-                    algebra = MaxPlus.Instance;
-                }
+                algebra ??= MaxPlus.Instance;
                 return algebra;
             }
         }
