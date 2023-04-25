@@ -27,6 +27,7 @@ namespace TropApprox {
 
             return result;
         }
+
         public static Entity.Matrix CreateMatrixX(Entity.Matrix vectorX, int MLeft, int MRight, int d = 1)
             => CreateMatrixX(vectorX, MLeft, MRight, Current.Algebra, d);
 
