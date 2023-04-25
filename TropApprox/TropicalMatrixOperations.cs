@@ -313,6 +313,59 @@ namespace TropApprox {
         #endregion
         #endregion
 
+        #region Get Zero Matrix
+
+        public static Entity.Matrix GetZeroMatrix(int size, Algebra algebra) {
+            if(size < 1) {
+                throw new ArgumentException("Size must be greater or equal to one");
+            }
+
+            var result = MathS.ZeroMatrix(size);
+            var tempColumn = MathS.ZeroVector(size);
+
+            for(int i = 0; i < size; i++) {
+                tempColumn = tempColumn.WithElement(i, algebra.Zero);
+            }
+
+            for(int i = 0; i < size; i++) {
+                result = result.WithColumn(i, tempColumn);
+            }
+
+            return result;
+        }
+
+        public static Entity.Matrix GetZeroMatrix(int rowCount, int columnCount, Algebra algebra) {
+            if(rowCount < 1 || columnCount < 1) {
+                throw new ArgumentException("Dimensions must be greater or equal to one");
+            }
+
+            var result = MathS.ZeroMatrix(rowCount, columnCount);
+            var cond = rowCount > columnCount;
+            var biggest = cond ? rowCount : columnCount;
+            var smallest = cond ? columnCount : rowCount;
+
+            var tempColumn = MathS.ZeroVector(biggest);
+
+            for(int i = 0; i < biggest; i++) {
+                tempColumn = tempColumn.WithElement(i, algebra.Zero);
+            }
+
+            for(int i = 0; i < smallest; i++) {
+                result = result.WithColumn(i, tempColumn);
+            }
+
+            return result;
+        }
+
+        #region Get Zero Matrix overloading
+
+        public static Entity.Matrix GetZeroMatrix(int size) => GetZeroMatrix(size, Current.Algebra);
+
+        public static Entity.Matrix GetZeroMatrix(int rowCount, int columnCount)
+            => GetZeroMatrix(rowCount, columnCount, Current.Algebra);
+        #endregion
+        #endregion
+
         #region Get Spectral Radius
 
         public static Entity GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
