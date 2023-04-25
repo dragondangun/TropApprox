@@ -426,17 +426,18 @@ namespace TropApprox {
             _Tr = Tr(matrix, out matrixPowers, algebra);
 
             (matrixPowers as List<Entity.Matrix>)?.RemoveAt(matrixPowers.Count() - 1);
-            (matrixPowers as List<Entity.Matrix>)?.Insert(0, GetIdentityMatrix(matrix.ColumnCount, algebra));
 
             if((Number.Real)_Tr > algebra.One) {
                 throw new ArgumentException("Tr(matrix) must <= identity element (1). Use TryKleeneStar() or KleeneStarEnumerator()!");
             }
+            var idenity = GetIdentityMatrix(matrix.ColumnCount, algebra);
+            var result = idenity;
 
-            var result = (matrixPowers as List<Entity.Matrix>)?[0];
-
-            for(int i = 1; i < (matrixPowers as List<Entity.Matrix>)?.Count; i++) {
-                result = TropicalMatrixAddition(result, (matrixPowers as List<Entity.Matrix>)?[i], algebra);
+            foreach(var m in matrixPowers) {
+                result = TropicalMatrixAddition(result, m, algebra);
             }
+
+            (matrixPowers as List<Entity.Matrix>)?.Insert(0, idenity);
 
             return result;
         }
