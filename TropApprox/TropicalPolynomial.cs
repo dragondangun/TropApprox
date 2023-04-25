@@ -139,10 +139,12 @@ namespace TropApprox {
             return sb.ToString();
         }
 
-        public static Number.Real GetPolynomialValue(Entity polynomial, Number.Real point) {
+        public static Number.Real GetPolynomialValue(Entity polynomial, Number.Real point, Algebra algebra) {
             var variable = Var("x");
 
-            return (Number.Real)Current.Algebra.Calculate(polynomial.Substitute(variable, point));
+            return (Number.Real)algebra.Calculate(polynomial.Substitute(variable, point));
         }
+
+        public static Number.Real GetPolynomialValue(Entity polynomial, Number.Real point) => GetPolynomialValue(polynomial, point, Current.Algebra);
     }
 }
