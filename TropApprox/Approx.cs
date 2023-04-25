@@ -32,6 +32,10 @@ namespace TropApprox {
             => CreateMatrixX(vectorX, MLeft, MRight, Current.Algebra, d);
 
         public static Entity.Matrix CreateVectorY(Entity.Matrix vectorX, Entity function) {
+            if((function).ToString().Length == 0) {
+                throw new ArgumentException("Function is empty!");
+            }
+
             var K = vectorX.RowCount;
 
             var result = MathS.ZeroVector(K);
