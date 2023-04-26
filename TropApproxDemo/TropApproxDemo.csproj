@@ -11,4 +11,10 @@
     <PackageReference Include="AngouriMath" Version="1.4.0-preview.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="TropApprox">
+      <HintPath>..\TropApprox\bin\Debug\net6.0\TropApprox.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
