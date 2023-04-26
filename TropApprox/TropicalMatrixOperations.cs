@@ -490,7 +490,7 @@ namespace TropApprox {
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Number.Real _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
             if(!matrix.IsSquare) {
-                throw new ArgumentException("Kleene star isn't defined. Use TryKleeneStar() or KleeneStarEnumerator()!");
+                throw new ArgumentException("Kleene star isn't defined for non-square matrix");
             }
 
             _Tr = Tr(matrix, out matrixPowers, algebra);
@@ -536,7 +536,7 @@ namespace TropApprox {
         public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Number.Real? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1) {
             k = k < 0 ? matrix.ColumnCount - 1 : k;
             List<Entity.Matrix> matrixPowersList;
-            if(!matrix.IsSquare) {
+            if(matrix.IsSquare) {
                 _Tr = Tr(matrix, out matrixPowers, algebra);
                 matrixPowersList = matrixPowers.ToList();
                 matrixPowersList.Insert(0, GetIdentityMatrix(matrix.ColumnCount, algebra));
@@ -547,7 +547,7 @@ namespace TropApprox {
                         GetNextNPowersOfMatrix(ref matrixPowersList, k - c, algebra, true);
                     }
                     else if(c > k) {
-                        matrixPowersList.RemoveRange(k, c - k);
+                        matrixPowersList.RemoveRange(k+1, c - k);
                     }
                 }
                 else {
@@ -555,11 +555,10 @@ namespace TropApprox {
                 }
             }
             else {
-                _Tr = null;
-                matrixPowersList = GetNPowersOfMatrix(matrix, k, algebra, true).ToList();
+                throw new ArgumentException("Kleene star isn't defined for non-square matrix.");
             }
 
-            var result = GetZeroMatrix(matrix.RowCount, matrix.ColumnCount, algebra);
+            var result = GetZeroMatrix(matrix.RowCount, algebra);
             foreach(var m in matrixPowersList) {
                 result = TropicalMatrixAddition(result, m, algebra);
             }
