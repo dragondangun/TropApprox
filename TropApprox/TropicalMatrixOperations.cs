@@ -99,7 +99,11 @@ namespace TropApprox {
         #region Tropical Matrix Scalar Multiplication
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrix, Number.Real scalar, Algebra algebra) {
-            var result = MathS.ZeroMatrix(matrix.RowCount, matrix.ColumnCount);
+            if(scalar == algebra.Zero) {
+                return GetZeroMatrix(matrix.RowCount, matrix.ColumnCount, algebra);
+            }
+
+            Entity.Matrix result = MathS.ZeroMatrix(matrix.RowCount, matrix.ColumnCount);
 
             for(int i = 0; i < matrix.RowCount; i++) {
                 for(int j = 0; j < matrix.ColumnCount; j++) {
@@ -108,7 +112,8 @@ namespace TropApprox {
                         result = result.WithElement(i, j, a);
                     }
                     else {
-                        result = result.WithElement(i, j, algebra.Calculate($"({a})*({scalar})"));
+                        var element = algebra.Calculate($"({a})*({scalar})");
+                        result = result.WithElement(i, j, element);
                     }
                 }
             }
@@ -131,7 +136,11 @@ namespace TropApprox {
                 throw new ArgumentException("None of matrices is scalar. Try TropicalMatrixMultiplication.");
             }
 
-            return TropicalMatrixScalarMultiplication(matrix, scalar, algebra);
+            var result = scalar == algebra.Zero ?
+                GetZeroMatrix(matrix.RowCount, matrix.ColumnCount, algebra) :
+                TropicalMatrixScalarMultiplication(matrix, scalar, algebra);
+
+            return result;
         }
 
         #region Tropical Matrix Scalar Multiplication overloading
