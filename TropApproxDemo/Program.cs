@@ -107,3 +107,6 @@ catch(ArgumentException ae) {
     Environment.Exit(1);
 }
 Console.WriteLine(KleeneStarThetaInversedAplusC.ToString(true));
+
+Console.WriteLine("Press any key to exit");
+Console.ReadKey();
