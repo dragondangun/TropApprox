@@ -15,7 +15,38 @@ namespace TropApprox {
             if(d <= 0) {
                 throw new ArgumentException("d must be > 0");
             }
-            return CreatePolynomial(coefs, MLeft, MRight, d);
+
+            List<Number.Real> coefsList = new() {
+                Capacity = coefs.RowCount,
+            };
+
+            for(int i = 0; i < coefs.RowCount; i++) {
+                coefsList.Add((Number.Real)coefs[i]);
+            }
+
+            var length = MRight - MLeft + 1;
+
+            if((int)length != coefsList.Count) {
+                throw new ArgumentException("Coefs length must be equal to powers length!");
+            }
+
+            List<Number.Real> powers = new() {
+                Capacity = (int)length
+            };
+
+            if(d == 1) {
+                for(var p = MLeft; p <= MRight; p += 1) {
+                    powers.Add(p);
+                }
+            }
+            else {
+                for(var p = MLeft; p <= MRight; p += 1) {
+                    powers.Add(p / d);
+                    //powers.Add((p / d).EvalNumerical().RealPart);
+                }
+            }
+
+            return CreatePolynomial(coefsList, powers);
         }
 
         //public static Entity CreatePolynomial(Entity.Matrix coefs, Number.Real MLeft, Number.Real MRight, uint d = 1) {
@@ -64,12 +95,12 @@ namespace TropApprox {
         //    return CreatePolynomial(coefsList, powers);
         //}
 
-        public static Entity CreatePolynomial(IEnumerable<Number.Real> coefs, Number.Real MLeft, Number.Real MRight, uint d = 1) {
+        public static Entity CreatePolynomial(IEnumerable<Number.Real> coefs, Number.Real MLeft, Number.Real MRight, int d = 1) {
             if(MRight < MLeft) {
                 throw new ArgumentException("MLeft must be <= MRight");
             }
 
-            if(d == 0) {
+            if(d <= 0) {
                 throw new ArgumentException("d must be > 0");
             }
 
