@@ -151,5 +151,19 @@ namespace TropApprox {
             // Assert
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void AreMatriciesEqual_A_1_nr_2_nr_3d1_B_1_nr_2_nr_3d1_T() {
+            // Arenge
+            Entity.Matrix A = MathS.Vector(1, 2, 3.1);
+
+            Entity.Matrix B = MathS.Vector(1, 2, 3.1);
+
+            // Act
+            bool result = TropApprox.TropicalMatrixOperations.AreMatriciesEqual(A, B);
+
+            // Assert
+            Assert.IsTrue(result);
+        }
     }
 }
