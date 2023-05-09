@@ -619,5 +619,38 @@ namespace TropApprox {
         #endregion
         #endregion
         #endregion
+
+        #region Get Vector of Ones
+
+        public static Entity.Matrix GetVectorOfOnes(int size, Algebra algebra) {
+            Entity.Matrix result = MathS.ZeroVector(size);
+
+            for(int i = 0; i < size; i++) {
+                result = result.WithElement(i, algebra.One);
+            }
+
+            return result;
+        }
+
+        public static Entity.Matrix GetVectorOfOnes(int size) => GetVectorOfOnes(size, Current.Algebra);
+
+        #endregion
+
+        public static bool AreMatriciesEqual(Entity.Matrix a, Entity.Matrix b) {
+            if(a.ColumnCount != b.ColumnCount ||
+                a.RowCount != b.RowCount)
+                return false;
+
+
+            for(int i = 0; i < a.RowCount; i++) {
+                for(int j = 0; j < b.ColumnCount; j++) {
+                    if((a[i,j] < b[i,j] |
+                        a[i, j] > b[i, j]).EvalBoolean())
+                        return false;
+                }
+            }
+
+            return true;
+        }
     }
 }
