@@ -13,7 +13,7 @@ string function = "x^2";
 int M = 2;
 var vectorX = MathS.Vector(-2, -1, 0, 1, 2);
 
-var coefs = Approx.ApproximateFunction(function, vectorX, -M, M);
+var coefs = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
 var pol = TropicalPolynomial.CreatePolynomial(coefs, -M, M);
 
