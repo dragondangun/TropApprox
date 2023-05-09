@@ -66,6 +66,7 @@ namespace TropApprox {
             return (aParsed > bParsed).EvalBoolean() ? aParsed : bParsed;
         }
     }
+
     public class MinPlus:Algebra {
         private static MinPlus instance;
         public static MinPlus Instance {
