@@ -5,9 +5,9 @@ using static AngouriMath.MathS;
 
 namespace TropApproxTests {
     [TestClass]
-    public class ApproximateFunctionTests {
+    public class ApproximateFunctionWithPolynomialTests {
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_0_x_n1_1() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_0_x_n1_1() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 0;
@@ -35,7 +35,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_0_x_n1_0_1() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_0_x_n1_0_1() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 0;
@@ -63,7 +63,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n1_1_x_n1_0_1() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n1_1_x_n1_0_1() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 1;
@@ -91,7 +91,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n1_1_x_n2_n1_0_1_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n1_1_x_n2_n1_0_1_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 1;
@@ -119,7 +119,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n2_2_x_n2_n1_0_1_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n2_2_x_n2_n1_0_1_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 2;
@@ -147,7 +147,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n2_2_x_n2_n1d5_n1_n0d5_0_0d5_1_1d5_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n2_2_x_n2_n1d5_n1_n0d5_0_0d5_1_1d5_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 2;
@@ -175,7 +175,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n3_3_x_n2_n1_0_1_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n3_3_x_n2_n1_0_1_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 3;
@@ -203,7 +203,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n3_3_x_n2_n1d5_n1_n0d5_0_0d5_1_1d5_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n3_3_x_n2_n1d5_n1_n0d5_0_0d5_1_1d5_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 3;
@@ -231,7 +231,7 @@ namespace TropApproxTests {
         }
 
         //[TestMethod]
-        //public void ApproximateFunction_f_sinx_M_n2_2_x_3d14_4d71_6d28() {
+        //public void ApproximateFunctionWithPolynomial_f_sinx_M_n2_2_x_3d14_4d71_6d28() {
         //    string function = "sin(x)";
         //    int M = 2;
         //    var vectorX = MathS.Vector(3.14159265, 4.71238898, 6.28318531);
@@ -258,7 +258,7 @@ namespace TropApproxTests {
         //}
 
         //[TestMethod]
-        //public void ApproximateFunction_f_sinx_M_n2_2_x_3d14_3d92_4d71_5d49_6d28() {
+        //public void ApproximateFunctionWithPolynomial_f_sinx_M_n2_2_x_3d14_3d92_4d71_5d49_6d28() {
         //    string function = "sin(x)";
         //    int M = 2;
         //    var vectorX = MathS.Vector(3.14159265, 3.92699082, 4.71238898, 5.49778714, 6.28318531);
@@ -285,7 +285,7 @@ namespace TropApproxTests {
         //}
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n4_4_d_2_x_n2_n1_0_1_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n4_4_d_2_x_n2_n1_0_1_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 4;
@@ -314,7 +314,7 @@ namespace TropApproxTests {
         }
 
         [TestMethod]
-        public void ApproximateFunction_f_x2_M_n3_3_d_2_x_n2_n1_0_1_2() {
+        public void ApproximateFunctionWithPolynomial_f_x2_M_n3_3_d_2_x_n2_n1_0_1_2() {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 3;
@@ -343,7 +343,7 @@ namespace TropApproxTests {
         }
 
         //[TestMethod]
-        //public void ApproximateFunction_f_sinx_M_n4_4_d_2_x_3d14_3d92_4d71_5d49_6d28() {
+        //public void ApproximateFunctionWithPolynomial_f_sinx_M_n4_4_d_2_x_3d14_3d92_4d71_5d49_6d28() {
         //    string function = "sin(x)";
         //    int M = 4;
         //    int d = 2;
