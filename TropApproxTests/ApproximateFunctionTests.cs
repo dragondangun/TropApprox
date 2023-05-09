@@ -16,7 +16,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(1);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, M, M);
 
             // Assert
             bool result = true;
@@ -44,7 +44,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0.5);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, M, M);
 
             // Assert
             bool result = true;
@@ -72,7 +72,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(0, 0, 0);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
             // Assert
             bool result = true;
@@ -100,7 +100,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(1, 1, 1);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
             // Assert
             bool result = true;
@@ -128,7 +128,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(-0.5, 0.5, 0.5, 0.5, -0.5);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
             // Assert
             bool result = true;
@@ -156,7 +156,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(-0.5, 0.25, 0.5, 0.25, -0.5);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
             // Assert
             bool result = true;
@@ -184,7 +184,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(-2, -1, 0, 0, 0, -1, -2);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
             // Assert
             bool result = true;
@@ -212,7 +212,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(-2.125, -0.875, -0.125, 0.125, -0.125, -0.875, -2.125);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
             // Assert
             bool result = true;
@@ -239,7 +239,7 @@ namespace TropApproxTests {
         //    var expected = MathS.Vector(6.28318531, 3.14159265, -1, -6.28318531, -12.5663706);
 
         //    // Act
-        //    var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+        //    var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
         //    // Assert
         //    bool result = true;
@@ -266,7 +266,7 @@ namespace TropApproxTests {
         //    var expected = MathS.Vector(6.322331, 3.18073834, -0.960854309, -6.24403962, -12.5272249);
 
         //    // Act
-        //    var given = Approx.ApproximateFunction(function, vectorX, -M, M);
+        //    var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
         //    // Assert
         //    bool result = true;
@@ -295,7 +295,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(-0.5, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0, -0.5);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M, d);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M, d);
 
             // Assert
             bool result = true;
@@ -324,7 +324,7 @@ namespace TropApproxTests {
             var expected = MathS.Vector(1, 1, 1, 1, 1, 1, 1);
 
             // Act
-            var given = Approx.ApproximateFunction(function, vectorX, -M, M, d);
+            var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M, d);
 
             // Assert
             bool result = true;
@@ -352,7 +352,7 @@ namespace TropApproxTests {
         //    var expected = MathS.Vector(6.28318531, 4.71238898, 3.14159265, 1.25638863, -1, -3.45600035, -6.28318531, -9.42477796, -12.5663706);
 
         //    // Act
-        //    var given = Approx.ApproximateFunction(function, vectorX, -M, M, d);
+        //    var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M, d);
 
         //    // Assert
         //    bool result = true;

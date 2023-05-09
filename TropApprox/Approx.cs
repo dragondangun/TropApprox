@@ -51,7 +51,7 @@ namespace TropApprox {
             return result;
         }
 
-        public static Entity.Matrix ApproximateFunction(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1) {
+        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1) {
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
             var vectorYPseudoInversed = TropicalMatrixOperations.PseudoInverse(vectorY, algebra);
@@ -69,7 +69,7 @@ namespace TropApprox {
         }
 
 
-        public static Entity.Matrix ApproximateFunction(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
-            => ApproximateFunction(function, vectorX, mLeft, mRight, Current.Algebra, d);
+        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
+            => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, Current.Algebra, d);
     }
 }
