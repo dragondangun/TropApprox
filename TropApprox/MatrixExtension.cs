@@ -22,5 +22,8 @@ namespace TropApprox {
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(this Entity.Matrix matrix, Number.Real scalar, Algebra algebra)
             => TMO.TropicalMatrixScalarMultiplication(matrix, scalar, algebra);
-        }
+
+        public static bool IsEqualTo(this Entity.Matrix a, Entity.Matrix b)
+            => TMO.AreMatriciesEqual(a, b);
     }
+}
