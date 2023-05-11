@@ -192,9 +192,7 @@ namespace TropApprox {
         }
 
         private static Entity.Matrix GetInitialVector(int size, Algebra algebra, Number.Real initialValue) {
-            if(algebra.One != 0) {
-                return TMO.GetVectorOfOnes(size, algebra);
-            }
+            algebra.Calculate(1);
 
             var result = MathS.ZeroVector(size);
             for(int i = 0; i < size; i++) {
