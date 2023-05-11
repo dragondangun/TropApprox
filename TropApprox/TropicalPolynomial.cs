@@ -48,53 +48,7 @@ namespace TropApprox {
 
             return CreatePolynomial(coefsList, powers);
         }
-
-        //public static Entity CreatePolynomial(Entity.Matrix coefs, Number.Real MLeft, Number.Real MRight, uint d = 1) {
-        //    if(MRight < MLeft) {
-        //        throw new ArgumentException("MLeft must be <= MRight");
-        //    }
-
-        //    if(d == 0) {
-        //        throw new ArgumentException("d must be > 0");
-        //    }
-
-        //    if(!coefs.IsVector) {
-        //        throw new ArgumentException("Coefs must be vector, not matrix. If it's row vector you should transpose it.");
-        //    }
-
-        //    var length = MRight - MLeft + 1;
-
-        //    if((int)length != coefs.RowCount) {
-        //        throw new ArgumentException("Coefs length must be equal to powers length!");
-        //    }
-
-        //    List<Number.Real> powers = new() {
-        //        Capacity = (int)length
-        //    };
-
-        //    if(d == 1) {
-        //        for(var p = MLeft; p <= MRight; p += 1) {
-        //            powers.Add(p);
-        //        }
-        //    }
-        //    else {
-        //        for(var p = MLeft; p <= MRight; p += 1) {
-        //            powers.Add(p / d);
-        //            //powers.Add((p / d).EvalNumerical().RealPart);
-        //        }
-        //    }
-            
-        //    List<Number.Real> coefsList = new() {
-        //        Capacity = (int)length
-        //    };
-
-        //    for(int i = 0; i < coefs.RowCount; i++) {
-        //        coefsList.Add((Number.Real)coefs[i]);
-        //    }
-
-        //    return CreatePolynomial(coefsList, powers);
-        //}
-
+ 
         public static Entity CreatePolynomial(IEnumerable<Number.Real> coefs, Number.Real MLeft, Number.Real MRight, int d = 1) {
             if(MRight < MLeft) {
                 throw new ArgumentException("MLeft must be <= MRight");
@@ -177,5 +131,15 @@ namespace TropApprox {
         }
 
         public static Number.Real GetPolynomialValue(Entity polynomial, Number.Real point) => GetPolynomialValue(polynomial, point, Current.Algebra);
+
+        public static Entity CreateRationalFunction(Entity P, Entity Q) {
+            return $"({P})/({Q})";
+        }
+
+        public static Number.Real GetRationalFunctionValue(Entity rationalFunction, Number.Real point, Algebra algebra)
+            => GetPolynomialValue(rationalFunction, point, algebra);
+
+        public static Number.Real GetRationalFunctionValue(Entity rationalFunction, Number.Real point)
+            => GetPolynomialValue(rationalFunction, point, Current.Algebra);
     }
 }
