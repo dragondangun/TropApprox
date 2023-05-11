@@ -42,7 +42,7 @@ namespace TropApprox {
 
             var result = MathS.ZeroVector(K);
 
-            var xVariable = Var("X");
+            var xVariable = Var("x");
 
             for(int i = 0; i < K; i++) {
                 var xValue = vectorX[i];
@@ -101,19 +101,22 @@ namespace TropApprox {
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, Current.Algebra, d);
 
-        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, int d = 1) {
+        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1) {
             var X = CreateMatrixX(vectorX, MLeft, MRight, d);
             var Y = CreateMatrixY(vectorX, function);
             var YX = Y.TropicalMatrixMultiplication(X);
 
             Entity.Matrix theta, sigma;
 
-            Optimization.SolveTwoSidedEquation(X, YX, out theta, out sigma);
+            Optimization.SolveTwoSidedEquation(X, YX, out theta, out sigma, out Delta);
 
             var P = TropicalPolynomial.CreatePolynomial(theta, MLeft, MRight, d);
             var Q = TropicalPolynomial.CreatePolynomial(sigma, MLeft, MRight, d);
 
             return TropicalPolynomial.CreateRationalFunction(P, Q);
         }
+
+        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, int d = 1)
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, d);
     }
 }
