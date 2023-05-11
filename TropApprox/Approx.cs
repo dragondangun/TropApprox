@@ -1,5 +1,6 @@
 ﻿using AngouriMath;
 using AngouriMath.Extensions;
+using HonkSharp.Fluency;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static AngouriMath.Entity;
 using static AngouriMath.MathS;
+using TMO = TropApprox.TropicalMatrixOperations;
 
 namespace TropApprox {
     public static class Approx {
@@ -68,8 +70,24 @@ namespace TropApprox {
             return theta;
         }
 
-
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
             => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, Current.Algebra, d);
+
+        public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1) {
+            var vectorY = CreateVectorY(vectorX, function);
+            var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
+
+            var important = vectorY.PseudoInverse(algebra).TropicalMatrixMultiplication(matrixX, algebra).PseudoInverse(algebra);
+            var deltaScalar = matrixX.TropicalMatrixMultiplication(important, algebra).PseudoInverse(algebra).TropicalMatrixMultiplication(vectorY, algebra);
+
+            var sqrtDelta = MathS.Vector(algebra.Calculate($"({deltaScalar[0]})^(1/2)"));
+
+            var theta = TropicalMatrixOperations.TropicalMatrixScalarMultiplication(sqrtDelta, important, algebra);
+
+            return theta;
+        }
+
+        public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
+            => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, Current.Algebra, d);
     }
 }
