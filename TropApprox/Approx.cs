@@ -64,7 +64,7 @@ namespace TropApprox {
             return result; 
         }
 
-        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1) {
+        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
             var vectorYPseudoInversed = TropicalMatrixOperations.PseudoInverse(vectorY, algebra);
@@ -72,34 +72,40 @@ namespace TropApprox {
             var important = TropicalMatrixOperations.PseudoInverse(vectorYPseudoInversedMultMatrixX, algebra);
             var matrixXMultImportant = TropicalMatrixOperations.TropicalMatrixMultiplication(matrixX, important, algebra);
             var matrixXMultImportantPseudoInversed = TropicalMatrixOperations.PseudoInverse(matrixXMultImportant, algebra);
-            var deltaScalar = TropicalMatrixOperations.TropicalMatrixMultiplication(matrixXMultImportantPseudoInversed, vectorY, algebra);
+            Delta = (Number.Real)TropicalMatrixOperations.TropicalMatrixMultiplication(matrixXMultImportantPseudoInversed, vectorY, algebra)[0];
 
-            var sqrtDelta = MathS.Vector(algebra.Calculate($"({deltaScalar[0]})^(1/2)"));
+            var sqrtDelta = MathS.Vector(algebra.Calculate($"({Delta})^(1/2)"));
 
             var theta = TropicalMatrixOperations.TropicalMatrixScalarMultiplication(sqrtDelta, important, algebra);
 
             return theta;
         }
 
-        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
-            => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, Current.Algebra, d);
+        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, int d = 1)
+            => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out Delta, Current.Algebra, d);
 
-        public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1) {
+        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
+            => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, Current.Algebra, d);
+
+        public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
 
             var important = vectorY.PseudoInverse(algebra).TropicalMatrixMultiplication(matrixX, algebra).PseudoInverse(algebra);
-            var deltaScalar = matrixX.TropicalMatrixMultiplication(important, algebra).PseudoInverse(algebra).TropicalMatrixMultiplication(vectorY, algebra);
+            Delta = (Number.Real)matrixX.TropicalMatrixMultiplication(important, algebra).PseudoInverse(algebra).TropicalMatrixMultiplication(vectorY, algebra)[0];
 
-            var sqrtDelta = MathS.Vector(algebra.Calculate($"({deltaScalar[0]})^(1/2)"));
+            var sqrtDelta = MathS.Vector(algebra.Calculate($"({Delta})^(1/2)"));
 
             var theta = TropicalMatrixOperations.TropicalMatrixScalarMultiplication(sqrtDelta, important, algebra);
 
             return theta;
         }
 
+        public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, int d = 1)
+            => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out Delta, Current.Algebra, d);
+
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
-            => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, Current.Algebra, d);
+            => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, Current.Algebra, d);
 
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1) {
             var X = CreateMatrixX(vectorX, MLeft, MRight, d);
