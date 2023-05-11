@@ -23,7 +23,7 @@ namespace TropApprox {
             int i = 0;
 
             List<Entity.Matrix> x = new() {
-                x_0 ?? TMO.GetVectorOfOnes(A.RowCount, algebra),
+                x_0 ?? GetInitialVector(A.RowCount, algebra),
             };
 
             List<Entity.Matrix> y = new();
@@ -113,7 +113,7 @@ namespace TropApprox {
             int i = 0;
 
             List<Entity.Matrix> x = new() {
-                TMO.GetVectorOfOnes(A.RowCount, algebra),
+                x_0 ?? GetInitialVector(A.RowCount, algebra),
             };
 
             List<Entity.Matrix> y = new();
@@ -190,5 +190,41 @@ namespace TropApprox {
 
             return false;
         }
+
+        private static Entity.Matrix GetInitialVector(int size, Algebra algebra, Number.Real initialValue) {
+            if(algebra.One != 0) {
+                return TMO.GetVectorOfOnes(size, algebra);
+            }
+
+            var result = MathS.ZeroVector(size);
+            for(int i = 0; i < size; i++) {
+                result = result.WithElement(i, initialValue);
+            }
+            return result;
+        }
+
+        private static Entity.Matrix GetInitialVector(int size, Algebra algebra) {
+            if(algebra.One != 0) {
+                return TMO.GetVectorOfOnes(size, algebra);
+            }
+
+            try {
+                algebra.Calculate(1);
+            }
+            catch(ArgumentException ex) {
+                throw new NotImplementedException("If you semiring where 1 is not in the using set, use overloading with initial value");
+            }
+
+            var result = MathS.ZeroVector(size);
+            for(int i = 0; i < size; i++) {
+                result = result.WithElement(i, 1);
+            }
+            return result;
+        }
+
+        private static Entity.Matrix GetInitialVector(int size) => GetInitialVector(size, Current.Algebra);
+
+        private static Entity.Matrix GetInitialVector(int size, Number.Real initialValue) => GetInitialVector(size, Current.Algebra, initialValue);
+
+        }
     }
-}
