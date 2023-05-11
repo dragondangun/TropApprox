@@ -23,7 +23,7 @@ namespace TropApprox {
             int i = 0;
 
             List<Entity.Matrix> x = new() {
-                x_0 ?? GetInitialVector(A.RowCount, algebra),
+                x_0 ?? GetInitialVector(A.ColumnCount, algebra),
             };
 
             List<Entity.Matrix> y = new();
@@ -113,7 +113,7 @@ namespace TropApprox {
             int i = 0;
 
             List<Entity.Matrix> x = new() {
-                x_0 ?? GetInitialVector(A.RowCount, algebra),
+                x_0 ?? GetInitialVector(A.ColumnCount, algebra),
             };
 
             List<Entity.Matrix> y = new();
