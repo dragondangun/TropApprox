@@ -46,7 +46,7 @@ namespace TropApprox {
 
             for(int i = 0; i < K; i++) {
                 var xValue = vectorX[i];
-                var val = function.Substitute(xVariable, xValue).EvalNumerical().RealPart; ;
+                var val = function.Substitute(xVariable, xValue).EvalNumerical().RealPart;
                 result = result.WithElement(i, val);
             }
 
