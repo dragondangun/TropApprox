@@ -211,7 +211,7 @@ namespace TropApprox {
             try {
                 algebra.Calculate(1);
             }
-            catch(ArgumentException ex) {
+            catch(ArgumentException) {
                 throw new NotImplementedException("If you semiring where 1 is not in the using set, use overloading with initial value");
             }
 
@@ -226,5 +226,5 @@ namespace TropApprox {
 
         private static Entity.Matrix GetInitialVector(int size, Number.Real initialValue) => GetInitialVector(size, Current.Algebra, initialValue);
 
-        }
     }
+}
