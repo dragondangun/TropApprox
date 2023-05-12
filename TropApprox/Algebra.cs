@@ -163,7 +163,7 @@ namespace TropApprox {
         }
 
         private static Number.Real BordersCheck(Number.Real a) {
-            if(a < 0) {
+            if(a >= 0) {
                 return a;
             }
 
@@ -219,7 +219,7 @@ namespace TropApprox {
         }
 
         private static Number.Real BordersCheck(Number.Real a) { 
-            if (a <= 0) {
+            if (a > 0) {
                 return a;
             }
 
