@@ -87,6 +87,9 @@ namespace TropApprox {
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
             => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, Current.Algebra, d);
 
+        public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1)
+            => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
+
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
@@ -106,6 +109,9 @@ namespace TropApprox {
 
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, Current.Algebra, d);
+
+        public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1)
+            => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
 
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1) {
             var X = CreateMatrixX(vectorX, MLeft, MRight, d);
