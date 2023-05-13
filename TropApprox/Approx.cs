@@ -113,7 +113,7 @@ namespace TropApprox {
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
 
-        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1) {
+        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Entity P, out Entity Q, out Number.Real Delta, int d = 1) {
             var X = CreateMatrixX(vectorX, MLeft, MRight, d);
             var Y = CreateMatrixY(vectorX, function);
             var YX = Y.TropicalMatrixMultiplication(X);
@@ -122,13 +122,19 @@ namespace TropApprox {
 
             Optimization.SolveTwoSidedEquation(X, YX, out theta, out sigma, out Delta);
 
-            var P = TropicalPolynomial.CreatePolynomial(theta, MLeft, MRight, d);
-            var Q = TropicalPolynomial.CreatePolynomial(sigma, MLeft, MRight, d);
+            P = TropicalPolynomial.CreatePolynomial(theta, MLeft, MRight, d);
+            Q = TropicalPolynomial.CreatePolynomial(sigma, MLeft, MRight, d);
 
             return TropicalPolynomial.CreateRationalFunction(P, Q);
         }
 
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, int d = 1)
-            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, d);
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out _, d);
+
+        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1)
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out Delta, d);
+
+        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Entity P, out Entity Q, int d = 1)
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out P, out Q, out _, d);
     }
 }
