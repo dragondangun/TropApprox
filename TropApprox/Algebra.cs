@@ -157,9 +157,9 @@ namespace TropApprox {
         };
 
         private Entity sum(Entity a, Entity b) {
-            var aParsed = Parse(a);
-            var bParsed = Parse(b);
-            return (aParsed > bParsed).EvalBoolean() ? aParsed : bParsed;
+            var aParsed = Parse(a).EvalNumerical().RealPart;
+            var bParsed = Parse(b).EvalNumerical().RealPart;
+            return (aParsed > bParsed) ? aParsed : bParsed;
         }
 
         private static Number.Real BordersCheck(Number.Real a) {
@@ -213,9 +213,9 @@ namespace TropApprox {
         };
 
         private Entity sum(Entity a, Entity b) {
-            var aParsed = Parse(a);
-            var bParsed = Parse(b);
-            return (aParsed < bParsed).EvalBoolean() ? aParsed : bParsed;
+            var aParsed = Parse(a).EvalNumerical().RealPart;
+            var bParsed = Parse(b).EvalNumerical().RealPart;
+            return (aParsed < bParsed) ? aParsed : bParsed;
         }
 
         private static Number.Real BordersCheck(Number.Real a) { 
