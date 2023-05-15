@@ -44,8 +44,6 @@ namespace TropApprox {
                 var y_iplus1 = TMO.TropicalMatrixScalarMultiplication(important, sqrtDelta, algebra);
                 y.Add(y_iplus1);
 
-                Trace.WriteLine($"Delta: {Delta}\n{y_iplus1.ToString(true)}\n\n");
-
                 if(StopCondition(Delta, y_iplus1, x, algebra)) {
                     break;
                 }
@@ -62,7 +60,6 @@ namespace TropApprox {
 
                 var x_iplus1 = TMO.TropicalMatrixScalarMultiplication(important, sqrtDelta, algebra);
                 x.Add(x_iplus1);
-                Trace.WriteLine($"Delta: {Delta}\n{x_iplus1.ToString(true)}\n\n");
 
                 if(StopCondition(Delta, x_iplus1, x, algebra)) {
                     break;
@@ -223,6 +220,5 @@ namespace TropApprox {
         private static Entity.Matrix GetInitialVector(int size) => GetInitialVector(size, Current.Algebra);
 
         private static Entity.Matrix GetInitialVector(int size, Number.Real initialValue) => GetInitialVector(size, Current.Algebra, initialValue);
-
     }
 }
