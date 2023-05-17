@@ -8,32 +8,19 @@ namespace TropApproxTests {
     public class ApproximateFunctionTests {
         [TestMethod]
         public void ApproximateFunction_f_x2_M_0_x_n1_1() {
-            throw new NotImplementedException();
-
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 0;
             var vectorX = MathS.Vector(-1, 1);
 
-            var expected = MathS.Vector(1);
+            Entity.Matrix theta = MathS.Vector(1);
+            Entity.Matrix sigma = MathS.Vector(0);
 
             // Act
-            //var given = Approx.ApproximateFunction(function, vectorX, M, M);
+            Approx.ApproximateFunction(function, vectorX, M, M, out Entity.Matrix expectedTheta, out Entity.Matrix expectedSigma);
 
             // Assert
-            //bool result = true;
-            //for(int i = 0; i < given.RowCount; i++) {
-            //    for(int j = 0; j < given.ColumnCount; j++) {
-            //        var r = (Number.Real)expected[i, j];
-            //        var l = (Number.Real)given[i, j];
-            //        if(r > l || l > r) {
-            //            result = false;
-            //            break;
-            //        }
-            //    }
-            //}
-
-            //Assert.IsTrue(result);
+            Assert.IsTrue(theta.IsEqualTo(expectedTheta) && sigma.IsEqualTo(expectedSigma));
         }
 
         
