@@ -9,12 +9,14 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static AngouriMath.Entity;
+using static AngouriMath.MathS;
 
 namespace TropApprox {
     public static class TropicalMatrixOperations {
 
         #region Pseudoinverse
         public static Entity.Matrix PseudoInverse(Entity.Matrix matrix, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             matrix = matrix.T;
 
             for(int i = 0; i < matrix.RowCount; i++) {
@@ -41,6 +43,7 @@ namespace TropApprox {
         #region Tropical Matrix Multiplication
 
         public static Entity.Matrix TropicalMatrixMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(matrixA.IsScalar || matrixB.IsScalar) {
                 return TropicalMatrixScalarMultiplication(matrixA, matrixB, algebra);
             }
@@ -99,6 +102,7 @@ namespace TropApprox {
         #region Tropical Matrix Scalar Multiplication
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrix, Number.Real scalar, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(scalar == algebra.Zero) {
                 return GetZeroMatrix(matrix.RowCount, matrix.ColumnCount, algebra);
             }
@@ -122,6 +126,7 @@ namespace TropApprox {
         }
 
         public static Entity.Matrix TropicalMatrixScalarMultiplication(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             Entity.Matrix matrix;
             Number.Real scalar;
             if(matrixA.IsScalar) {
@@ -157,6 +162,7 @@ namespace TropApprox {
         #region Tropical Matrix Addition
 
         public static Entity.Matrix TropicalMatrixAddition(Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(matrixA.ColumnCount != matrixB.ColumnCount &&
                 matrixA.RowCount != matrixB.RowCount) {
                 throw new ArgumentException("Matrices must be the same size");
@@ -202,6 +208,7 @@ namespace TropApprox {
         #region tr
 
         public static Number.Real tr(Entity.Matrix matrix, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
@@ -241,6 +248,7 @@ namespace TropApprox {
 
         #region Get N Powers of Matrix
         public static IEnumerable<Entity.Matrix> GetNPowersOfMatrix(Entity.Matrix matrix, int n, Algebra algebra, bool withIdentityMatrix = false) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(n < 1) {
                 throw new ArgumentException("N must be greater or equal to one");
             }
@@ -273,6 +281,7 @@ namespace TropApprox {
         #region Get Next N Powers of Matrix
 
         private static void GetNextNPowersOfMatrix(ref List<Entity.Matrix> matrixPowers, int n, Algebra algebra, bool withIdentityMatrix = false) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(n < 1) {
                 throw new ArgumentException("N must be greater or equal to one");
             }
@@ -301,6 +310,7 @@ namespace TropApprox {
         #region Get Identity Matrix
 
         public static Entity.Matrix GetIdentityMatrix(int size, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(size < 1) {
                 throw new ArgumentException("Size must be greater or equal to one");
             }
@@ -333,6 +343,7 @@ namespace TropApprox {
         #region Get Zero Matrix
 
         public static Entity.Matrix GetZeroMatrix(int size, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(size < 1) {
                 throw new ArgumentException("Size must be greater or equal to one");
             }
@@ -352,6 +363,7 @@ namespace TropApprox {
         }
 
         public static Entity.Matrix GetZeroMatrix(int rowCount, int columnCount, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(rowCount < 1 || columnCount < 1) {
                 throw new ArgumentException("Dimensions must be greater or equal to one");
             }
@@ -386,6 +398,7 @@ namespace TropApprox {
         #region Get Spectral Radius
 
         public static Number.Real GetSpectralRadius(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
@@ -439,6 +452,7 @@ namespace TropApprox {
         #region Tr
 
         public static Number.Real Tr(Entity.Matrix matrix, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Matrix must be square!");
             }
@@ -489,6 +503,7 @@ namespace TropApprox {
         #region Kleene Star
 
         public static Entity.Matrix KleeneStar(Entity.Matrix matrix, out Number.Real _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(!matrix.IsSquare) {
                 throw new ArgumentException("Kleene star isn't defined for non-square matrix");
             }
@@ -534,6 +549,7 @@ namespace TropApprox {
         #region Try Kleene Star
 
         public static Entity.Matrix? TryKleeneStar(Entity.Matrix matrix, out Number.Real? _Tr, out IEnumerable<Entity.Matrix> matrixPowers, Algebra algebra, int k = -1) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             k = k < 0 ? matrix.ColumnCount - 1 : k;
             List<Entity.Matrix> matrixPowersList;
             if(matrix.IsSquare) {
@@ -596,6 +612,7 @@ namespace TropApprox {
         #region Kleene Star Enumerator
 
         public static IEnumerable<Entity.Matrix> KleeneStarEnumerator(Entity.Matrix matrix, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             Entity.Matrix result = GetIdentityMatrix(matrix.ColumnCount, algebra);
             Entity.Matrix power = result;
             Entity.Matrix prev;
@@ -637,6 +654,7 @@ namespace TropApprox {
         #endregion
 
         public static bool AreMatriciesEqual(Entity.Matrix a, Entity.Matrix b) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(a.ColumnCount != b.ColumnCount ||
                 a.RowCount != b.RowCount)
                 return false;

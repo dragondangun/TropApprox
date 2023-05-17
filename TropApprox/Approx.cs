@@ -15,6 +15,7 @@ namespace TropApprox {
     public static class Approx {
 
         public static Entity.Matrix CreateMatrixX(Entity.Matrix vectorX, int MLeft, int MRight, Algebra algebra, int d = 1) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var columnCount = MRight - MLeft + 1;
             var K = vectorX.RowCount;
 
@@ -34,6 +35,7 @@ namespace TropApprox {
             => CreateMatrixX(vectorX, MLeft, MRight, Current.Algebra, d);
 
         public static Entity.Matrix CreateVectorY(Entity.Matrix vectorX, Entity function) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if((function).ToString().Length == 0) {
                 throw new ArgumentException("Function is empty!");
             }
@@ -54,6 +56,7 @@ namespace TropApprox {
         }
 
         public static Entity.Matrix CreateMatrixY(Entity.Matrix vectorX, Entity function) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var vectorY = CreateVectorY(vectorX, function);
             var result = TMO.GetIdentityMatrix(vectorX.RowCount);
 
@@ -65,6 +68,7 @@ namespace TropApprox {
         }
 
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
             var vectorYPseudoInversed = TropicalMatrixOperations.PseudoInverse(vectorY, algebra);
@@ -91,6 +95,7 @@ namespace TropApprox {
             => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
 
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var vectorY = CreateVectorY(vectorX, function);
             var matrixX = CreateMatrixX(vectorX, mLeft, mRight, algebra, d);
 
@@ -124,6 +129,7 @@ namespace TropApprox {
             int d = 1
         )
         {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var X = CreateMatrixX(vectorX, MLeft, MRight, d);
             var Y = CreateMatrixY(vectorX, function);
             var YX = Y.TropicalMatrixMultiplication(X);

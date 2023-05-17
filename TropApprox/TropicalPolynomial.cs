@@ -12,6 +12,7 @@ using AngouriMath.Extensions;
 namespace TropApprox {
     public static class TropicalPolynomial {
         public static Entity CreatePolynomial(Entity.Matrix coefs, Number.Real MLeft, Number.Real MRight, int d = 1) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(d <= 0) {
                 throw new ArgumentException("d must be > 0");
             }
@@ -50,6 +51,7 @@ namespace TropApprox {
         }
  
         public static Entity CreatePolynomial(IEnumerable<Number.Real> coefs, Number.Real MLeft, Number.Real MRight, int d = 1) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(MRight < MLeft) {
                 throw new ArgumentException("MLeft must be <= MRight");
             }
@@ -84,6 +86,7 @@ namespace TropApprox {
         }
 
         public static Entity CreatePolynomial(Entity.Matrix coefs, IEnumerable<Number.Real> powers) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(!coefs.IsVector) {
                 throw new ArgumentException("Coefs must be vector, not matrix. If it's row vector you should transpose it.");
             }
@@ -104,6 +107,7 @@ namespace TropApprox {
         }
 
         public static Entity CreatePolynomial(IEnumerable<Number.Real> coefs, IEnumerable<Number.Real> powers) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var coefsList = coefs.ToList();
             var powersList = powers.ToList();
 
@@ -125,6 +129,7 @@ namespace TropApprox {
         }
 
         public static Number.Real GetPolynomialValue(Entity polynomial, Number.Real point, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             var variable = Var("x");
 
             return (Number.Real)algebra.Calculate(polynomial.Substitute(variable, point));

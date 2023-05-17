@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static AngouriMath.Entity;
+using static AngouriMath.MathS;
 using TMO = TropApprox.TropicalMatrixOperations;
 
 namespace TropApprox {
@@ -20,6 +21,7 @@ namespace TropApprox {
             Entity.Matrix? x_0 = null 
         ) 
         {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             int i = 0;
 
             List<Entity.Matrix> x = new() {
@@ -107,6 +109,7 @@ namespace TropApprox {
             Entity.Matrix? x_0 = null
         ) 
         {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             int i = 0;
 
             List<Entity.Matrix> x = new() {
@@ -176,6 +179,7 @@ namespace TropApprox {
         => PipeSolveTwoSidedEquation(A, B, out theta, out sigma, out _, algebra, x_0);
 
         private static bool StopCondition(Number.Real Delta, Entity.Matrix vector, List<Entity.Matrix> vectorCollection, Algebra algebra) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
             if(!(Delta > algebra.One || Delta < algebra.One)) {
                 return true;
             }
@@ -189,7 +193,8 @@ namespace TropApprox {
         }
 
         private static Entity.Matrix GetInitialVector(int size, Algebra algebra, Number.Real initialValue) {
-            algebra.Calculate(1);
+            using var _ = Settings.DowncastingEnabled.Set(false);
+            algebra.Calculate(initialValue);
 
             var result = MathS.ZeroVector(size);
             for(int i = 0; i < size; i++) {
@@ -199,7 +204,8 @@ namespace TropApprox {
         }
 
         private static Entity.Matrix GetInitialVector(int size, Algebra algebra) {
-            if(algebra.One != 0) {
+            using var _ = Settings.DowncastingEnabled.Set(false);
+            if(algebra.One > 0 || algebra.One < 0) {
                 return TMO.GetVectorOfOnes(size, algebra);
             }
 
