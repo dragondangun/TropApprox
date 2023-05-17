@@ -17,6 +17,19 @@ var coefs = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
 
 var pol = TropicalPolynomial.CreatePolynomial(coefs, -M, M);
 
+// Function approximation
+
+function = $"x^3-x^2-x+1";
+var Xs = MathS.Vector(-2, -1, 0, 1, 2);
+M = 5;
+
+Approx.ApproximateFunction(function, Xs, -M, M, out Entity.Matrix thetaV, out Entity.Matrix sigma, out Number.Real Delta);
+
+Console.WriteLine($"Delta = {Delta}\n\n");
+Console.WriteLine($"Theta = {thetaV.ToString(true)}\n\n");
+Console.WriteLine($"Sigma = {sigma.ToString(true)}\n\n");
+
+
 // Opt solution
 
 // Без ограничений
@@ -110,41 +123,6 @@ Console.WriteLine(KleeneStarThetaInversedAplusC.ToString(true));
 
 // Function approximation
 
-function = $"x^3-x^2-x+1";
-var Xs = MathS.Vector(-2, -1, 0, 1, 2);
-M = 7;
-var X = Approx.CreateMatrixX(Xs, -M, M);
-var Y = Approx.CreateMatrixY(Xs, function);
-var YX = Y.TropicalMatrixMultiplication(X);
-
-Entity.Matrix thetaV, sigma;
-Number.Real Delta;
-
-Optimization.SolveTwoSidedEquation(X, YX, out thetaV, out sigma, out Delta);
-
-Console.WriteLine($"Delta = {Delta}\n\n");
-
-string del = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-string thetaVstr = thetaV.ToString(true);
-string sigmaStr = sigma.ToString(true);
-
-thetaVstr = deleteAllEntrence(thetaVstr, del);
-sigmaStr = deleteAllEntrence(sigmaStr, del);
-
-Console.WriteLine($"theta: \n{thetaVstr}\n\n");
-Console.WriteLine($"sigma: \n{sigmaStr}\n\n");
-
-string strT = TropicalPolynomial.CreatePolynomial(thetaV, -M, M).ToString();
-string strS = TropicalPolynomial.CreatePolynomial(sigma, -M, M).ToString();
-
-strT = deleteAllEntrence(strT, del);
-strS = deleteAllEntrence(strS, del);
-Console.WriteLine($"P(x): \n{strT}\n\n");
-Console.WriteLine($"Q(x): \n{strS}");
 
 Console.WriteLine("Press any key to exit");
 Console.ReadKey();
-
-string deleteAllEntrence(string str, string entr) {
-    return str.Replace(entr, "");
-}
