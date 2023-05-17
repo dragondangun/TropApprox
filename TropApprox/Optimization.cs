@@ -44,7 +44,7 @@ namespace TropApprox {
                 var y_iplus1 = TMO.TropicalMatrixScalarMultiplication(important, sqrtDelta, algebra);
                 y.Add(y_iplus1);
 
-                if(StopCondition(Delta, y_iplus1, x, algebra)) {
+                if(StopCondition(Delta, y_iplus1, y, algebra)) {
                     break;
                 }
 
@@ -123,10 +123,10 @@ namespace TropApprox {
                     .TropicalMatrixMultiplication(A, algebra).TropicalMatrixMultiplication(x[i], algebra))[0, 0];
                 sqrtDelta = (Number.Real)algebra.Calculate($"{Delta}^(1/2)");
 
-                var y_iplus1 = TMO.TropicalMatrixScalarMultiplication(important, sqrtDelta, algebra);
+                var y_iplus1 = important.TropicalMatrixScalarMultiplication(sqrtDelta, algebra);
                 y.Add(y_iplus1);
 
-                if(StopCondition(Delta, y_iplus1, x, algebra)) {
+                if(StopCondition(Delta, y_iplus1, y, algebra)) {
                     break;
                 }
 
