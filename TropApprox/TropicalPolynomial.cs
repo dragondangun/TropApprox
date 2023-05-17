@@ -137,9 +137,7 @@ namespace TropApprox {
 
         public static Number.Real GetPolynomialValue(Entity polynomial, Number.Real point) => GetPolynomialValue(polynomial, point, Current.Algebra);
 
-        public static Entity CreateRationalFunction(Entity P, Entity Q) {
-            return $"({P})/({Q})";
-        }
+        public static Entity CreateRationalFunction(Entity P, Entity Q) => $"({P})/({Q})";
 
         public static Number.Real GetRationalFunctionValue(Entity rationalFunction, Number.Real point, Algebra algebra)
             => GetPolynomialValue(rationalFunction, point, algebra);
