@@ -113,14 +113,22 @@ namespace TropApprox {
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
 
-        public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Entity P, out Entity Q, out Number.Real Delta, int d = 1) {
+        public static Entity ApproximateFunction
+        (
+            Entity function,
+            Entity.Matrix vectorX,
+            int MLeft, int MRight,
+            out Entity P, out Entity Q,
+            out Entity.Matrix theta, out Entity.Matrix sigma,
+            out Number.Real Delta,
+            int d = 1
+        )
+        {
             var X = CreateMatrixX(vectorX, MLeft, MRight, d);
             var Y = CreateMatrixY(vectorX, function);
             var YX = Y.TropicalMatrixMultiplication(X);
 
-            Entity.Matrix theta, sigma;
-
-            Optimization.SolveTwoSidedEquation(X, YX, out theta, out sigma, out Delta);
+            Optimization.PipeSolveTwoSidedEquation(X, YX, out theta, out sigma, out Delta);
 
             P = TropicalPolynomial.CreatePolynomial(theta, MLeft, MRight, d);
             Q = TropicalPolynomial.CreatePolynomial(sigma, MLeft, MRight, d);
@@ -129,12 +137,52 @@ namespace TropApprox {
         }
 
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, int d = 1)
-            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out _, d);
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out _, out _, out _, d);
 
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1)
-            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out Delta, d);
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out _, out _, out Delta, d);
+        
+        public static Entity ApproximateFunction
+            (
+                Entity function, Entity.Matrix vectorX,
+                int MLeft, int MRight,
+                out Entity.Matrix theta, out Entity.Matrix sigma,
+                int d = 1
+            )
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out theta, out sigma, out _, d);
+
+        public static Entity ApproximateFunction
+            (
+                Entity function, Entity.Matrix vectorX,
+                int MLeft, int MRight,
+                out Entity.Matrix theta, out Entity.Matrix sigma,
+                out Number.Real Delta,
+                int d = 1
+            )
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out theta, out sigma, out Delta, d);
 
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Entity P, out Entity Q, int d = 1)
-            => ApproximateFunction(function, vectorX, MLeft, MRight, out P, out Q, out _, d);
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out P, out Q, out _, out _, out _, d);
+
+        public static Entity ApproximateFunction
+            (
+                Entity function, Entity.Matrix vectorX,
+                int MLeft, int MRight,
+                out Entity P, out Entity Q,
+                out Number.Real Delta,
+                int d = 1
+            )
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out P, out Q, out _, out _, out Delta, d);
+
+        public static Entity ApproximateFunction
+            (
+                Entity function, Entity.Matrix vectorX,
+                int MLeft, int MRight,
+                out Entity P, out Entity Q,
+                out Entity.Matrix theta, out Entity.Matrix sigma,
+                int d = 1
+            )
+            => ApproximateFunction(function, vectorX, MLeft, MRight, out P, out Q, out theta, out sigma, out _, d);
+
     }
 }
