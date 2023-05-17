@@ -237,9 +237,9 @@ namespace TropApproxTests {
             using var _ = Settings.DowncastingEnabled.Set(false);
             string function = "x^2";
             int M = 3;
-            var vectorX = MathS.Vector(-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2);
+            var vectorX = MathS.Vector(-2, -(Number.Real)3/2, -1, -(Number.Real)1/2, 0, (Number.Real)1 /2, 1, (Number.Real)3 /2, 2);
 
-            var expected = MathS.Vector(-2.125, -0.875, -0.125, 0.125, -0.125, -0.875, -2.125);
+            var expected = MathS.Vector(-(Number.Real)17 /8, -(Number.Real)7 /8, -(Number.Real)1 /8, (Number.Real)1 /8, -(Number.Real)1 /8, -(Number.Real)7 /8, -(Number.Real)17 /8);
 
             // Act
             var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M);
@@ -322,7 +322,7 @@ namespace TropApproxTests {
             int d = 2;
             var vectorX = MathS.Vector(-2, -1, 0, 1, 2);
 
-            var expected = MathS.Vector(-0.5, 0, 0.5, 0.5, 0.5, 0.5, 0.5, 0, -0.5);
+            var expected = MathS.Vector(-(Number.Real)1/2, 0, (Number.Real)1/2, (Number.Real)1/2, (Number.Real)1/2, (Number.Real)1/2, (Number.Real)1/2, 0, -(Number.Real)1/2);
 
             // Act
             var given = Approx.ApproximateFunctionWithPolynomial(function, vectorX, -M, M, d);
