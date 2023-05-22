@@ -23,4 +23,6 @@ TropApprox DLL can:
     * elementary continuous functions with tropical rational function (in terms of MaxPlus-algebra),
 * solve two sided vector equations or find pseudo-solution.
 
-Line for DOI
+Also TropApprox have extension class for AngouriMath's Entity.Matrix that allow to write more fluent-styled code
+
+[![DOI](https://zenodo.org/badge/625579483.svg)](https://zenodo.org/badge/latestdoi/625579483)
