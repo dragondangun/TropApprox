@@ -180,11 +180,16 @@ namespace TropApprox {
 
         private static bool StopCondition(Number.Real Delta, Entity.Matrix vector, List<Entity.Matrix> vectorCollection, Algebra algebra) {
             using var _ = Settings.DowncastingEnabled.Set(false);
+            // We can't compare as ``Delta == algebra.One`` cause of internal logic of AngouriMath.
+            // Read more in official AngouriMath's discord server: https://discord.com/channels/642350046213439489/897053152044535808/1097626035761197056
             if(!(Delta > algebra.One || Delta < algebra.One)) {
                 return true;
             }
+            // We can't optimize with hash table, cause of internal logic of AngouriMath.
+            // We can get two matrices with the same elements, but hash will be different.
+            // Read more in official AngouriMath's discord server: https://discord.com/channels/642350046213439489/897053152044535808/1097626035761197056
             for(int j = 0; j < vectorCollection.Count - 1; j++) {
-                if(TMO.AreMatriciesEqual(vectorCollection[j], vector)) {
+                if(vector.IsEqualTo(vectorCollection[j])) {
                     return true;
                 }
             }
