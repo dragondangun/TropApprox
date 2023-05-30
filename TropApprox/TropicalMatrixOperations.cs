@@ -817,15 +817,22 @@ namespace TropApprox {
             var biggest = cond ? rowCount : columnCount;
             var smallest = cond ? columnCount : rowCount;
 
-            var tempColumn = MathS.ZeroVector(biggest);
+            var tempVector = MathS.ZeroVector(biggest);
 
             for(int i = 0; i < biggest; i++) {
-                tempColumn = tempColumn.WithElement(i, algebra.Zero);
+                tempVector = tempVector.WithElement(i, algebra.Zero);
             }
 
-            //TODO: fix bug
-            for(int i = 0; i < smallest; i++) {
-                result = result.WithColumn(i, tempColumn);
+            if(cond) {
+                for(int i = 0; i < smallest; i++) {
+                    result = result.WithColumn(i, tempVector);
+                }
+            }
+            else {
+                tempVector = tempVector.T;
+                for(int i = 0; i < smallest; i++) {
+                    result = result.WithRow(i, tempVector);
+                }
             }
 
             return result;
