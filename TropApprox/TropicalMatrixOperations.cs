@@ -1701,8 +1701,7 @@ namespace TropApprox {
                 power = TropicalMatrixMultiplication(power, matrix, algebra);
                 result = TropicalMatrixAddition(result, power, algebra);
 
-                // May be buggy, but seems to be ok.
-                if(prev == result) {
+                if(prev.IsEqualTo(result)) {
                     yield break;
                 }
             }
