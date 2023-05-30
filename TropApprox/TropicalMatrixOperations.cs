@@ -1736,8 +1736,14 @@ namespace TropApprox {
         /// <returns>
         /// Returns vector of ones in terms of tropical <paramref name="algebra"/>.
         /// </returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="size"/> must be &gt;=1
+        /// </exception>
         public static Entity.Matrix GetVectorOfOnes(int size, Algebra algebra) {
-            //TODO: exception
+            if(size < 1) {
+                throw new ArgumentException("Size must be >= 1");
+            }
+
             Entity.Matrix result = MathS.ZeroVector(size);
 
             for(int i = 0; i < size; i++) {
