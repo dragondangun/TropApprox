@@ -546,11 +546,12 @@ namespace TropApprox {
         )
         {
             using var _ = Settings.DowncastingEnabled.Set(false);
-            var X = CreateMatrixX(vectorX, MLeft, MRight, d);
+            var mp = MaxPlus.Instance;
+            var X = CreateMatrixX(vectorX, MLeft, MRight, mp, d);
             var Y = CreateMatrixY(vectorX, function);
-            var YX = Y.TropicalMatrixMultiplication(X);
+            var YX = Y.TropicalMatrixMultiplication(X, mp);
 
-            Optimization.PipeSolveTwoSidedEquation(X, YX, out theta, out sigma, out Delta);
+            Optimization.PipeSolveTwoSidedEquation(X, YX, out theta, out sigma, out Delta, mp);
 
             P = TropicalPolynomial.CreatePolynomial(theta, MLeft, MRight, d);
             Q = TropicalPolynomial.CreatePolynomial(sigma, MLeft, MRight, d);
