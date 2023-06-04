@@ -1788,7 +1788,11 @@ namespace TropApprox {
         /// </returns>
         public static bool AreMatriciesEqual(Entity.Matrix a, Entity.Matrix b) {
             using var _ = Settings.DowncastingEnabled.Set(false);
-            
+
+            if(a == b) {
+                return true; // if a == b is true then a equals b, but if a == b is false a may be equals b cause of AngouriMath logic
+            }
+
             if(a is null && b is null) {
                 return true;
             }
