@@ -21,6 +21,9 @@ namespace TropApprox {
                 throw new ArgumentException("MLeft must be less than MRight");
             }
             var K = vectorX.RowCount;
+            if(K < 1) {
+                throw new ArgumentException("Vector of X is empty");
+            }
 
             var result = MathS.ZeroMatrix(K, columnCount);
 
@@ -44,6 +47,9 @@ namespace TropApprox {
             }
 
             var K = vectorX.RowCount;
+            if(K < 1) {
+                throw new ArgumentException("Vector of X is empty");
+            }
 
             var result = MathS.ZeroVector(K);
 
