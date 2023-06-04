@@ -17,6 +17,9 @@ namespace TropApprox {
         public static Entity.Matrix CreateMatrixX(Entity.Matrix vectorX, int MLeft, int MRight, Algebra algebra, int d = 1) {
             using var _ = Settings.DowncastingEnabled.Set(false);
             var columnCount = MRight - MLeft + 1;
+            if(columnCount < 1) {
+                throw new ArgumentException("MLeft must be less than MRight");
+            }
             var K = vectorX.RowCount;
 
             var result = MathS.ZeroMatrix(K, columnCount);
