@@ -67,6 +67,54 @@ namespace TropApprox {
             => TMO.TropicalMatrixMultiplication(matrixA, matrixB, algebra);
 
         /// <summary>
+        /// Tropical addition of <paramref name="matrixA"/> and <paramref name="matrixB"/> in terms of tropical <paramref name="algebra"/>
+        /// </summary>
+        /// <param name="matrixA">
+        /// Left addendum
+        /// </param>
+        /// <param name="matrixB">
+        /// Right addendum
+        /// </param>
+        /// <param name="algebra">
+        /// Tropical algebra in terms of which you want calculate tropical addition of two matrices
+        /// </param>
+        /// <returns>
+        /// Tropical sum of two matrices
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="matrixA"/> and <paramref name="matrixB"/> can't be null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Matricies (vectors) <paramref name="matrixA"/> and <paramref name="matrixB"/> must be appropriate size
+        /// </exception>
+        public static Entity.Matrix TropicalMatrixAddition(this Entity.Matrix matrixA, Entity.Matrix matrixB, Algebra algebra)
+            => TMO.TropicalMatrixAddition(matrixA, matrixB, algebra);
+
+        /// <summary>
+        /// Tropical addition of <paramref name="matrixA"/> and <paramref name="matrixB"/> in terms of <see cref="Current.Algebra"/> tropical algebra
+        /// </summary>
+        /// <param name="matrixA">
+        /// Left addendum
+        /// </param>
+        /// <param name="matrixB">
+        /// Right addendum
+        /// </param>
+        /// <param name="algebra">
+        /// Tropical algebra in terms of which you want calculate tropical addition of two matrices
+        /// </param>
+        /// <returns>
+        /// Tropical sum of two matrices
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="matrixA"/> and <paramref name="matrixB"/> can't be null
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        /// Matricies (vectors) <paramref name="matrixA"/> and <paramref name="matrixB"/> must be appropriate size
+        /// </exception>
+        public static Entity.Matrix TropicalMatrixAddition(this Entity.Matrix matrixA, Entity.Matrix matrixB)
+            => TMO.TropicalMatrixAddition(matrixA, matrixB, Current.Algebra);
+
+        /// <summary>
         /// Multiplication of matrices <paramref name="matrixA"/> (or/and vectors) and <paramref name="matrixB"/> in terms of <see cref="Current.Algebra"/> tropical algebra
         /// </summary>
         /// <param name="matrixA">
@@ -91,7 +139,7 @@ namespace TropApprox {
             => TMO.TropicalMatrixMultiplication(matrixA, matrixB, Current.Algebra);
 
         /// <summary>
-        /// Multiplication of <paramref name="matrix"/> (vector) and <paramref name="scalar"/> in terms of tropical algebra <paramref name="algebra"/>
+        /// Multiplication of <paramref name="matrix"/> (vector) and <paramref name="scalar"/> in terms of tropical <paramref name="algebra"/>
         /// </summary>
         /// <param name="matrix">
         /// Matrix (vector) which is multiplicated by <paramref name="scalar"/>
@@ -110,6 +158,24 @@ namespace TropApprox {
         /// </exception>
         public static Entity.Matrix TropicalMatrixScalarMultiplication(this Entity.Matrix matrix, Number.Real scalar, Algebra algebra)
             => TMO.TropicalMatrixScalarMultiplication(matrix, scalar, algebra);
+
+        /// <summary>
+        /// Multiplication of <paramref name="matrix"/> (vector) and <paramref name="scalar"/> in terms of <see cref="Current.Algebra"/> tropical algebra 
+        /// </summary>
+        /// <param name="matrix">
+        /// Matrix (vector) which is multiplicated by <paramref name="scalar"/>
+        /// </param>
+        /// <param name="scalar">
+        /// Scalar value which is multiplicated by <paramref name="matrix"/>
+        /// </param>
+        /// <returns>
+        /// Tropical product of <paramref name="matrix"/> by <paramref name="scalar"/>
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="matrix"/> can't be null
+        /// </exception>
+        public static Entity.Matrix TropicalMatrixScalarMultiplication(this Entity.Matrix matrix, Number.Real scalar)
+            => TMO.TropicalMatrixScalarMultiplication(matrix, scalar, Current.Algebra);
 
         /// <summary>
         /// Compares two matrices <paramref name="a"/> and <paramref name="b"/>
