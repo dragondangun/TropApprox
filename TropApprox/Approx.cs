@@ -40,7 +40,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// MLeft must be less than MRight <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix CreateMatrixX(Entity.Matrix vectorX, int MLeft, int MRight, Algebra algebra, int d = 1) {
             using var _ = Settings.DowncastingEnabled.Set(false);
@@ -51,6 +53,9 @@ namespace TropApprox {
             var K = vectorX.RowCount;
             if(K < 1) {
                 throw new ArgumentException("Vector of X is empty");
+            }
+            if(d <= 0) {
+                throw new ArgumentException("d must be > 0");
             }
 
             var result = MathS.ZeroMatrix(K, columnCount);
@@ -88,7 +93,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// MLeft must be less than MRight<br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix CreateMatrixX(Entity.Matrix vectorX, int MLeft, int MRight, int d = 1)
             => CreateMatrixX(vectorX, MLeft, MRight, Current.Algebra, d);
@@ -199,7 +206,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
             using var _ = Settings.DowncastingEnabled.Set(false);
@@ -249,7 +258,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, int d = 1)
             => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out Delta, Current.Algebra, d);
@@ -280,7 +291,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
             => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, Current.Algebra, d);
@@ -317,7 +330,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix ApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1)
             => ApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
@@ -361,7 +376,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, Algebra algebra, int d = 1) {
             using var _ = Settings.DowncastingEnabled.Set(false);
@@ -411,7 +428,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, out Number.Real Delta, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out Delta, Current.Algebra, d);
@@ -445,7 +464,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, Current.Algebra, d);
@@ -485,7 +506,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity.Matrix PipeApproximateFunctionWithPolynomial(Entity function, Entity.Matrix vectorX, int mLeft, int mRight, Algebra algebra, int d = 1)
             => PipeApproximateFunctionWithPolynomial(function, vectorX, mLeft, mRight, out _, algebra, d);
@@ -532,7 +555,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction
         (
@@ -585,7 +610,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, int d = 1)
             => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out _, out _, out _, d);
@@ -620,7 +647,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Number.Real Delta, int d = 1)
             => ApproximateFunction(function, vectorX, MLeft, MRight, out _, out _, out _, out _, out Delta, d);
@@ -657,7 +686,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction
             (
@@ -704,7 +735,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction
             (
@@ -748,7 +781,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction(Entity function, Entity.Matrix vectorX, int MLeft, int MRight, out Entity P, out Entity Q, int d = 1)
             => ApproximateFunction(function, vectorX, MLeft, MRight, out P, out Q, out _, out _, out _, d);
@@ -789,7 +824,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction
             (
@@ -839,7 +876,9 @@ namespace TropApprox {
         /// <exception cref="ArgumentException">
         /// Function must be non-empty <br/>
         /// or <br/>
-        /// Vector of x is empty
+        /// Vector of x is empty <br/>
+        /// or <br/>
+        /// d must be greater than 0
         /// </exception>
         public static Entity ApproximateFunction
             (
